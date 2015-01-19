@@ -1,21 +1,11 @@
 ---
 # tasks file for wordpress
-- name: install
-  shell: "curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
-  args:
-    creates: "{{ wordpress_wp_cli_install_dir }}/wp-cli.phar"
-  tags: [configuration, wordpress, wordpress-wp-cli-install]
-
-- name: rename - wp-cli.phar -> wp-cli
-  command: "mv {{ wordpress_wp_cli_install_dir }}/wp-cli.phar {{ wordpress_wp_cli_install_dir }}/wp-cli"
-  args:
-    creates: "{{ wordpress_wp_cli_install_dir }}/wp-cli"
-  tags: [configuration, wordpress, wordpress-wp-cli-move]
-
-- name: check permissions
-  file:
-    path: "{{ wordpress_wp_cli_install_dir }}/wp-cli"
+- name: install (wp-cli)
+  get_url:
+    url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    dest: "{{ wordpress_wp_cli_install_dir }}/wp-cli"
+    force: true
     owner: root
     group: root
     mode: 0755
-  tags: [configuration, wordpress, wordpress-wp-cli-permissions]
+  tags: [configuration, wordpress, wordpress-wp-cli-install]
