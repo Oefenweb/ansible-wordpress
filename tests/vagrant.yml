@@ -1,0 +1,7 @@
+---
+# test file for wordpress
+- hosts: all
+  remote_user: vagrant
+  sudo: true
+  roles:
+    - wordpress
