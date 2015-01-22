@@ -9,3 +9,33 @@
     group: root
     mode: 0755
   tags: [configuration, wordpress, wordpress-wp-cli-install]
+
+- name: check download
+  shell: "ls {{ wordpress_path }} | grep -q 'wp-'"
+  register: check_download
+  failed_when: False
+  changed_when: False
+  tags: [configuration, wordpress, wordpress-is-downloaded]
+
+- name: download
+  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' core download"
+  when: check_download.rc != 0
+  tags: [configuration, wordpress, wordpress-downloaded]
+
+- name: configure
+  shell: "wp-cli --allow-root --no-color --quiet --path='{{ wordpress_path }}' core config --dbname='{{ wordpress_dbname }}' --dbuser='{{ wordpress_dbuser }}' --dbpass='{{ wordpress_dbpass }}' --dbhost='{{ wordpress_dbhost }}'"
+  args:
+    creates: "{{ wordpress_path }}/wp-config.php"
+  tags: [configuration, wordpress, wordpress-configure]
+
+- name: check installation
+  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' core is-installed"
+  register: check_installation
+  failed_when: False
+  changed_when: False
+  tags: [configuration, wordpress, wordpress-is-installed]
+
+- name: install
+  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' core install --url='{{ wordpress_url }}' --title='{{ wordpress_title }}' --admin_name='{{ wordpress_admin_name }}' --admin_email='{{ wordpress_admin_email }}' --admin_password='{{ wordpress_password }}'"
+  when: check_installation.rc != 0
+  tags: [configuration, wordpress, wordpress-install]
