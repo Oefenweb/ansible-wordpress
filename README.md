@@ -7,6 +7,10 @@ Set up wordpress (using `wp-cli`).
 #### Requirements
 
 * `php` (5.3.2+)
+* `mysql` (5.0+)
+* `apache2` (with `mod_rewrite` enabled)
+
+This role assumes a working virtual host (that handles `wordpress_url`).
 
 #### Variables
 

@@ -3,4 +3,6 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - ansible-wordpress
+    - role: ansible-wordpress
+      wordpress_dbuser: wordpress
+      wordpress_dbpass: wordpress

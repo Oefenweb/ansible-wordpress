@@ -2,6 +2,9 @@
 language: python
 python: "2.7"
 
+services:
+  - mysql
+
 env:
   - ANSIBLE_VERSION=1.4
   - ANSIBLE_VERSION=1.5
@@ -12,8 +15,18 @@ env:
 before_install:
   - sudo apt-get update -qq
 
-  # Install php and curl
-  - sudo apt-get install php5 php5-cli curl
+  # Install and configure dependencies
+  - sudo apt-get install wget apache2 php5 php5-mysql libapache2-mod-php5
+  - sudo a2enmod rewrite
+  - sudo service apache2 reload
+
+  # Fix missing sendmail
+  - sudo ln -s -f /bin/true /usr/sbin/sendmail
+
+  # Create database and user
+  - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS wordpress;"
+  - mysql -uroot -e "CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'wordpress';"
+  - mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'wordpress'@'localhost' WITH GRANT OPTION;"
 
 install:
   # Install Ansible.
@@ -35,6 +48,13 @@ script:
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
+
+  # Test wordpress installation
+  - >
+    wget http://localhost/wp-login.php -O /dev/null -S --quiet 2>&1
+    | grep -q '200 OK'
+    && (echo 'Availability test: pass' && exit 0)
+    || (echo 'Availability test: fail' && exit 1)
 
 notifications:
   email: false

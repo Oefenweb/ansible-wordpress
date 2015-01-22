@@ -10,5 +10,5 @@ wordpress_path: /var/www
 wordpress_url: http://localhost
 wordpress_title: wordpress
 wordpress_admin_name: admin
-wordpress_admin_email: root@localhost
+wordpress_admin_email: root@localhost.localdomain
 wordpress_password: 'tuFr8=aPra@a'
