@@ -39,3 +39,18 @@
   shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' core install --url='{{ wordpress_url }}' --title='{{ wordpress_title }}' --admin_name='{{ wordpress_admin_name }}' --admin_email='{{ wordpress_admin_email }}' --admin_password='{{ wordpress_password }}'"
   when: check_installation.rc != 0
   tags: [configuration, wordpress, wordpress-install]
+
+- name: check installation (theme)
+  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' theme is-installed {{ item }}"
+  register: check_installation_theme
+  failed_when: False
+  changed_when: False
+  with_items: wordpress_install_themes
+  when: wordpress_install_themes
+  tags: [configuration, wordpress, wordpress-is-installed-theme]
+
+- name: install (theme)
+  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' theme install {{ item.item }} --activate"
+  with_items: check_installation_theme.results
+  when: wordpress_install_themes and item.rc != 0
+  tags: [configuration, wordpress, wordpress-install-theme]
