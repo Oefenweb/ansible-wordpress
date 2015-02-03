@@ -42,7 +42,7 @@
 
 - name: check installation (theme)
   shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' theme is-installed {{ item }}"
-  register: check_installation_theme
+  register: check_installation_themes
   failed_when: False
   changed_when: False
   with_items: wordpress_install_themes
@@ -51,7 +51,7 @@
 
 - name: install (theme)
   shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' theme install {{ item.item }} --activate"
-  with_items: check_installation_theme.results
+  with_items: check_installation_themes.results
   when: wordpress_install_themes and item.rc != 0
   tags: [configuration, wordpress, wordpress-install-theme]
 
