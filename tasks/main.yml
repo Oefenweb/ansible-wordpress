@@ -54,3 +54,18 @@
   with_items: check_installation_theme.results
   when: wordpress_install_themes and item.rc != 0
   tags: [configuration, wordpress, wordpress-install-theme]
+
+- name: check installation (plugin)
+  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' plugin is-installed {{ item }}"
+  register: check_installation_plugins
+  failed_when: False
+  changed_when: False
+  with_items: wordpress_install_plugins
+  when: wordpress_install_plugins
+  tags: [configuration, wordpress, wordpress-is-installed-plugin]
+
+- name: install (plugin)
+  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' plugin install {{ item.item }} --activate"
+  with_items: check_installation_plugins.results
+  when: wordpress_install_plugins and item.rc != 0
+  tags: [configuration, wordpress, wordpress-install-plugin]
