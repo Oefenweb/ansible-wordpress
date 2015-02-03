@@ -12,3 +12,4 @@ wordpress_title: wordpress
 wordpress_admin_name: admin
 wordpress_admin_email: root@localhost.localdomain
 wordpress_password: 'tuFr8=aPra@a'
+wordpress_install_themes: []

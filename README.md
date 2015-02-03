@@ -26,6 +26,7 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 * `wordpress_admin_name`: [default: `admin`]: Wordpress admin (user)name
 * `wordpress_admin_email`: [default: `root@localhost`]: Wordpress admin email address
 * `wordpress_password`: [default: `'tuFr8=aPra@a'`]: Wordpress admin password (make sure to change)
+* `wordpress_install_themes`: [default: `[]`]: (Additional) themes to install (and activate)
 
 ## Dependencies
 
