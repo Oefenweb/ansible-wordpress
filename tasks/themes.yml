@@ -1,0 +1,27 @@
+---
+# tasks file for wordpress, themes
+- name: identify installation (theme)
+  shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1 }}"
+  register: check_installation_themes
+  failed_when: False
+  changed_when: False
+  with_subelements:
+    - wordpress_installs
+    - themes
+  when: item.1
+  tags: [configuration, wordpress, wordpress-themes, wordpress-is-installed-theme]
+
+- name: install (theme)
+  shell: "echo wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' theme install {{ item.item.1 }} --activate"
+  with_items: check_installation_themes.results
+  when: check_installation_themes is defined and item.item.1 and item.rc != 0
+  tags: [configuration, wordpress, wordpress-themes, wordpress-install-theme]
+
+- name: check install (theme)
+  shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1 }}"
+  with_subelements:
+    - wordpress_installs
+    - themes
+  when: item.1
+  tags: [configuration, wordpress, wordpress-themes, wordpress-install-theme-check]
+
