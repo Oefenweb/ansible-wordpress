@@ -31,7 +31,7 @@
   with_items: wordpress_installs
   tags: [configuration, wordpress, wordpress-configure]
 
-- name: check installation
+- name: identify installation
   shell: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
   register: check_installation
   failed_when: False
@@ -45,7 +45,12 @@
   when: wordpress_installs and item.rc != 0
   tags: [configuration, wordpress, wordpress-install]
 
-- name: check installation (theme)
+- name: check install
+  shell: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
+  with_items: wordpress_installs
+  tags: [configuration, wordpress, wordpress-install-check]
+
+- name: identify installation (theme)
   shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1 }}"
   register: check_installation_themes
   failed_when: False
@@ -62,7 +67,15 @@
   when: check_installation_themes is defined and item.item.1 and item.rc != 0
   tags: [configuration, wordpress, wordpress-install-theme]
 
-- name: check installation (plugin)
+- name: check install (theme)
+  shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1 }}"
+  with_subelements:
+    - wordpress_installs
+    - themes
+  when: item.1
+  tags: [configuration, wordpress, wordpress-install-theme-check]
+
+- name: identify installation (plugin)
   shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin is-installed {{ item.1 }}"
   register: check_installation_plugins
   failed_when: False
@@ -78,3 +91,11 @@
   with_items: check_installation_plugins.results
   when: check_installation_plugins is defined and item.item.1 and item.rc != 0
   tags: [configuration, wordpress, wordpress-install-plugin]
+
+- name: check install (plugin)
+  shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin is-installed {{ item.1 }}"
+  with_subelements:
+    - wordpress_installs
+    - plugins
+  when: item.1
+  tags: [configuration, wordpress, wordpress-install-plugin-check]
