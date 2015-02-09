@@ -4,5 +4,3 @@
   remote_user: root
   roles:
     - role: ansible-wordpress
-      wordpress_dbuser: wordpress
-      wordpress_dbpass: wordpress

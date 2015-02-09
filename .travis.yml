@@ -25,7 +25,7 @@ before_install:
 
   # Create database and user
   - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS wordpress;"
-  - mysql -uroot -e "CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'wordpress';"
+  - mysql -uroot -e "CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'heCrE7*d2KEs';"
   - mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'wordpress'@'localhost' WITH GRANT OPTION;"
 
 install:

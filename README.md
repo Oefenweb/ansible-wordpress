@@ -16,18 +16,20 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 
 * `wordpress_wp_cli_install_dir` [default: `/usr/local/bin`]: Install directory for `wp-cli`
 
-* `wordpress_dbname`: [default: `wordpress`]: Database name
-* `wordpress_dbuser`: [default: `wordpress`]: Database username
-* `wordpress_dbpass`: [default: `'heCrE7*d2KEs'`]: Database password (make sure to change)
-* `wordpress_dbhost`: [default: `localhost`]: Database host
-* `wordpress_path`: [default: `/var/www`]: Install directory for wordpress
-* `wordpress_url`: [default: `http://localhost`]: Wordpress url
-* `wordpress_title`: [default: `wordpress`]: Wordpress title
-* `wordpress_admin_name`: [default: `admin`]: Wordpress admin (user)name
-* `wordpress_admin_email`: [default: `root@localhost`]: Wordpress admin email address
-* `wordpress_password`: [default: `'tuFr8=aPra@a'`]: Wordpress admin password (make sure to change)
-* `wordpress_install_themes`: [default: `[]`]: (Additional) themes to install (and activate)
-* `wordpress_install_plugins`: [default: `[]`]: (Additional) plugins to install (and activate)
+* `wordpress_installs`:
+  * `name`: [default: `wordpress`]: Install name (not used for anything, just an identifier)
+  * `dbname`: [default: `wordpress`]: Database name
+  * `dbuser`: [default: `wordpress`]: Database username
+  * `dbpass`: [default: `'heCrE7*d2KEs'`]: Database password (**make sure to change**)
+  * `dbhost`: [default: `localhost`, optional]: Database host
+  * `path`: [default: `/var/www`]: Install directory for wordpress
+  * `url`: [default: `http://localhost`]: Wordpress url
+  * `title`: [default: `wordpress`]: Wordpress title
+  * `admin_name`: [default: `admin`, optional]: Wordpress admin (user)name
+  * `admin_email`: [default: `root@localhost`]: Wordpress admin email address
+  * `admin_password`: [default: `'tuFr8=aPra@a'`]: Wordpress admin password (**make sure to change**)
+  * `themes`: [default: `[]`]: (Additional) themes to install (and activate)
+  * `plugins`: [default: `[]`]: (Additional) plugins to install (and activate)
 
 ## Dependencies
 
