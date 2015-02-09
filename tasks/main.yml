@@ -11,61 +11,70 @@
   tags: [configuration, wordpress, wordpress-wp-cli-install]
 
 - name: check download
-  shell: "ls {{ wordpress_path }} | grep -q 'wp-'"
+  shell: "ls {{ item.path }} | grep -q 'wp-'"
   register: check_download
   failed_when: False
   changed_when: False
+  with_items: wordpress_installs
   tags: [configuration, wordpress, wordpress-is-downloaded]
 
 - name: download
-  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' core download"
-  when: check_download.rc != 0
+  shell: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' core download"
+  with_items: check_download.results
+  when: wordpress_installs and item.rc != 0
   tags: [configuration, wordpress, wordpress-downloaded]
 
 - name: configure
-  shell: "wp-cli --allow-root --no-color --quiet --path='{{ wordpress_path }}' core config --dbname='{{ wordpress_dbname }}' --dbuser='{{ wordpress_dbuser }}' --dbpass='{{ wordpress_dbpass }}' --dbhost='{{ wordpress_dbhost }}'"
+  shell: "wp-cli --allow-root --no-color --quiet --path='{{ item.path }}' core config --dbname='{{ item.dbname }}' --dbuser='{{ item.dbuser }}' --dbpass='{{ item.dbpass }}' --dbhost='{{ item.dbhost | default('localhost') }}'"
   args:
-    creates: "{{ wordpress_path }}/wp-config.php"
+    creates: "{{ item.path }}/wp-config.php"
+  with_items: wordpress_installs
   tags: [configuration, wordpress, wordpress-configure]
 
 - name: check installation
-  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' core is-installed"
+  shell: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
   register: check_installation
   failed_when: False
   changed_when: False
+  with_items: wordpress_installs
   tags: [configuration, wordpress, wordpress-is-installed]
 
 - name: install
-  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' core install --url='{{ wordpress_url }}' --title='{{ wordpress_title }}' --admin_name='{{ wordpress_admin_name }}' --admin_email='{{ wordpress_admin_email }}' --admin_password='{{ wordpress_password }}'"
-  when: check_installation.rc != 0
+  shell: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' core install --url='{{ item.item.url }}' --title='{{ item.item.title }}' --admin_name='{{ item.item.admin_name | default('admin') }}' --admin_email='{{ item.item.admin_email }}' --admin_password='{{ item.item.admin_password }}'"
+  with_items: check_installation.results
+  when: wordpress_installs and item.rc != 0
   tags: [configuration, wordpress, wordpress-install]
 
 - name: check installation (theme)
-  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' theme is-installed {{ item }}"
+  shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1 }}"
   register: check_installation_themes
   failed_when: False
   changed_when: False
-  with_items: wordpress_install_themes
-  when: wordpress_install_themes
+  with_subelements:
+    - wordpress_installs
+    - themes
+  when: item.1
   tags: [configuration, wordpress, wordpress-is-installed-theme]
 
 - name: install (theme)
-  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' theme install {{ item.item }} --activate"
+  shell: "echo wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' theme install {{ item.item.1 }} --activate"
   with_items: check_installation_themes.results
-  when: wordpress_install_themes and item.rc != 0
+  when: check_installation_themes is defined and item.item.1 and item.rc != 0
   tags: [configuration, wordpress, wordpress-install-theme]
 
 - name: check installation (plugin)
-  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' plugin is-installed {{ item }}"
+  shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin is-installed {{ item.1 }}"
   register: check_installation_plugins
   failed_when: False
   changed_when: False
-  with_items: wordpress_install_plugins
-  when: wordpress_install_plugins
+  with_subelements:
+    - wordpress_installs
+    - plugins
+  when: item.1
   tags: [configuration, wordpress, wordpress-is-installed-plugin]
 
 - name: install (plugin)
-  shell: "wp-cli --allow-root --no-color --path='{{ wordpress_path }}' plugin install {{ item.item }} --activate"
+  shell: "wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' plugin install {{ item.item.1 }} --activate"
   with_items: check_installation_plugins.results
-  when: wordpress_install_plugins and item.rc != 0
+  when: check_installation_plugins is defined and item.item.1 and item.rc != 0
   tags: [configuration, wordpress, wordpress-install-plugin]

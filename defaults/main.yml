@@ -2,15 +2,17 @@
 # defaults file for wordpress
 wordpress_wp_cli_install_dir: /usr/local/bin
 
-wordpress_dbname: wordpress
-wordpress_dbuser: wordpress
-wordpress_dbpass: 'heCrE7*d2KEs'
-wordpress_dbhost: localhost
-wordpress_path: /var/www
-wordpress_url: http://localhost
-wordpress_title: wordpress
-wordpress_admin_name: admin
-wordpress_admin_email: root@localhost.localdomain
-wordpress_password: 'tuFr8=aPra@a'
-wordpress_install_themes: []
-wordpress_install_plugins: []
+wordpress_installs:
+  - name: wordpress
+    dbname: wordpress
+    dbuser: wordpress
+    dbpass: 'heCrE7*d2KEs'
+    dbhost: localhost
+    path: /var/www
+    url: http://localhost
+    title: wordpress
+    admin_name: admin
+    admin_email: root@localhost.localdomain
+    admin_password: 'tuFr8=aPra@a'
+    themes: []
+    plugins: []
