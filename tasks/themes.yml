@@ -19,6 +19,7 @@
 
 - name: check install (theme)
   shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1 }}"
+  changed_when: False
   with_subelements:
     - wordpress_installs
     - themes

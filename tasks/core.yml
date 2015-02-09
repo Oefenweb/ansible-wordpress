@@ -37,5 +37,6 @@
 
 - name: check install
   shell: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
+  changed_when: False
   with_items: wordpress_installs
   tags: [configuration, wordpress, wordpress-core, wordpress-install-check]
