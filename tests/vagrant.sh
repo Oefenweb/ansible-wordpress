@@ -21,8 +21,6 @@ alias apt-install='apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o
 apt-update;
 apt-install debconf-utils;
 
-# Install and configure dependencies
-
 echo 'mysql-server mysql-server/root_password password vagrant' | debconf-set-selections;
 echo 'mysql-server mysql-server/root_password_again password vagrant' | debconf-set-selections;
 echo 'mysql-server-5.1 mysql-server/root_password password vagrant' | debconf-set-selections;
@@ -49,7 +47,6 @@ service apache2 reload;
 # Fix missing sendmail
 ln -s -f /bin/true /usr/sbin/sendmail;
 
-# Create database and user
 mysql -uroot -pvagrant -e "CREATE DATABASE IF NOT EXISTS wordpress;";
 mysql -uroot -pvagrant -e "CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'heCrE7*d2KEs';";
 mysql -uroot -pvagrant -e "GRANT ALL PRIVILEGES ON *.* TO 'wordpress'@'localhost' WITH GRANT OPTION;";
