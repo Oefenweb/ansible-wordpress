@@ -62,6 +62,10 @@ Vagrant.configure("2") do |config|
 
       vms.vm.network :private_network, ip: box[:ip]
 
+      vms.vm.provision :shell do |shell|
+        shell.path = "tests/vagrant.sh"
+      end
+
       vms.vm.provision :ansible do |ansible|
         ansible.playbook = "tests/vagrant.yml"
         ansible.verbose = "vv"
