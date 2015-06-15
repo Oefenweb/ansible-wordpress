@@ -11,7 +11,7 @@
   tags: [configuration, wordpress, wordpress-wp-cli, wordpress-wp-cli-install]
 
 - name: check (wp-cli)
-  shell: "wp-cli --allow-root --no-color --info"
+  command: "wp-cli --allow-root --no-color --info"
   register: check_info
   failed_when: "'WP-CLI' not in check_info.stdout"
   changed_when: False
