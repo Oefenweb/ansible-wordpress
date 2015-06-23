@@ -30,6 +30,13 @@ echo 'mysql-server-5.5 mysql-server/root_password_again password vagrant' | debc
 
 apt-install mysql-server;
 
+cat << EOF > ~/.my.cnf
+[client]
+host = 127.0.0.1
+user = root
+password = vagrant
+EOF
+
 apt-install wget apache2 php5 php5-cli php5-mysql libapache2-mod-php5;
 
 # Remove default index page of Ubuntu 1(0|2).04 / Debian (6|7)
@@ -47,8 +54,8 @@ service apache2 reload;
 # Fix missing sendmail
 ln -s -f /bin/true /usr/sbin/sendmail;
 
-mysql -uroot -pvagrant -e "CREATE DATABASE IF NOT EXISTS wordpress;";
-mysql -uroot -pvagrant -e "CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'heCrE7*d2KEs';";
-mysql -uroot -pvagrant -e "GRANT ALL PRIVILEGES ON *.* TO 'wordpress'@'localhost' WITH GRANT OPTION;";
+mysql -e "CREATE DATABASE IF NOT EXISTS wordpress;";
+mysql -e "CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'heCrE7*d2KEs';";
+mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'wordpress'@'localhost' WITH GRANT OPTION;";
 
 touch /provisioned;
