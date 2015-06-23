@@ -23,6 +23,8 @@ This role assumes a working virtual host (that handles `wordpress_url`).
   * `dbpass`: [default: `'heCrE7*d2KEs'`]: Database password (**make sure to change**)
   * `dbhost`: [default: `localhost`, optional]: Database host
   * `path`: [default: `/var/www`]: Install directory for wordpress
+  * `owner`: [default: `www-data`]: The name of the user that should own the install
+  * `group`: [default: `owner`, `www-data`]: The name of the group that should own the install
   * `url`: [default: `http://localhost`]: Wordpress url
   * `title`: [default: `wordpress`]: Wordpress title
   * `admin_name`: [default: `admin`, optional]: Wordpress admin (user)name
