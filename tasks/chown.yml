@@ -1,0 +1,10 @@
+# tasks file for wordpress, chown
+---
+- name: change owner (and group)
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner | default('www-data') }}"
+    group: "{{ item.group | default(item.owner) | default('www-data') }}"
+    recurse: true
+  with_items: wordpress_installs
+  tags: [configuration, wordpress, wordpress-chown]
