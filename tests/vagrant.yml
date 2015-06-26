@@ -20,3 +20,6 @@
         admin_password: 'tuFr8=aPra@a'
         themes: []
         plugins: []
+        users:
+          src: ../files/users.csv
+          skip_update: true

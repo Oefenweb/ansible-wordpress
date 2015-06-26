@@ -1,2 +1,3 @@
 ---
 # vars file for wordpress
+wordpress_data_path: /var/lib/ansible/wordpress
