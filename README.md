@@ -33,7 +33,7 @@ This role assumes a working virtual host (that handles `wordpress_url`).
   * `themes`: [default: `[]`]: (Additional) themes to install (and activate)
   * `plugins`: [default: `[]`]: (Additional) plugins to install (and activate)
   * `users`: [default: `{}`]: User declarations
-  * `users.src`: [required]: The local path of the csv file to import, can be absolute or relative (e.g. `../../../files/wordpress/users.csv`)
+  * `users.src`: [required]: The local path of the [csv file](http://wp-cli.org/commands/user/import-csv/) to import, can be absolute or relative (e.g. `../../../files/wordpress/users.csv`)
   * `users.skip_update`: [default: `true`]: Whether or not to update users that already exist
 
 ## Dependencies
