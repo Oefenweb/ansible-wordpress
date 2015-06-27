@@ -4,5 +4,5 @@
 - include: core.yml
 - include: themes.yml
 - include: plugins.yml
-- include: chown.yml
 - include: users.yml
+- include: chown.yml
