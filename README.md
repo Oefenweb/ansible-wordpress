@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Oefenweb/ansible-wordpress.svg?branch=master)](https://travis-ci.org/Oefenweb/ansible-wordpress) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-wordpress-blue.svg)](https://galaxy.ansible.com/list#/roles/2600)
 
-Set up wordpress (using `wp-cli`).
+Set up (multiple) wordpress installations in Debian-like systems (using `wp-cli`).
 
 #### Requirements
 
@@ -32,6 +32,9 @@ This role assumes a working virtual host (that handles `wordpress_url`).
   * `admin_password`: [default: `'tuFr8=aPra@a'`]: Wordpress admin password (**make sure to change**)
   * `themes`: [default: `[]`]: (Additional) themes to install (and activate)
   * `plugins`: [default: `[]`]: (Additional) plugins to install (and activate)
+  * `users`: [default: `{}`]: User declarations
+  * `users.src`: [required]: The local path of the csv file to import, can be absolute or relative (e.g. `../../../files/wordpress/users.csv`)
+  * `users.skip_update`: [default: `true`]: Whether or not to update users that already exist
 
 ## Dependencies
 

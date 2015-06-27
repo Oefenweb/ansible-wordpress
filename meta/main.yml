@@ -1,18 +1,21 @@
----
 # meta file for screen
+---
 galaxy_info:
   author: Mischa ter Smitten
   company: Oefenweb.nl B.V.
-  description: Set up wordpress in Debian-like systems (using wp-cli).
+  description: Set up (multiple) wordpress installations in Debian-like systems (using wp-cli).
   license: MIT
   min_ansible_version: 1.4
   platforms:
   - name: Ubuntu
     versions:
-    - all
+    - lucid
+    - precise
+    - trusty
   - name: Debian
     versions:
-    - all
+    - squeeze
+    - wheezy
   categories:
   - web
 dependencies: []
