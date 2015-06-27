@@ -1,5 +1,5 @@
----
 # tasks file for wordpress, plugins
+---
 - name: identify installation (plugin)
   shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin is-installed {{ item.1 }}"
   register: check_installation_plugins

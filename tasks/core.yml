@@ -1,5 +1,5 @@
----
 # tasks file for wordpress, core
+---
 - name: check download
   shell: "ls {{ item.path }} | grep -q 'wp-'"
   register: check_download

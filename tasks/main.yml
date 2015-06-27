@@ -1,5 +1,5 @@
----
 # tasks file for wordpress
+---
 - include: wp-cli.yml
 - include: core.yml
 - include: themes.yml

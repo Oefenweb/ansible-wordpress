@@ -1,5 +1,5 @@
----
 # tasks file for wordpress, wp-cli
+---
 - name: install (wp-cli)
   get_url:
     url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar

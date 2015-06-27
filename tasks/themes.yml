@@ -1,5 +1,5 @@
----
 # tasks file for wordpress, themes
+---
 - name: identify installation (theme)
   shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1 }}"
   register: check_installation_themes
