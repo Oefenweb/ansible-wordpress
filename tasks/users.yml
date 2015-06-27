@@ -1,0 +1,30 @@
+# tasks file for wordpress, users
+---
+- name: create (data) directory
+  file:
+    path: "{{ wordpress_data_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  tags: [configuration, wordpress, wordpress-users]
+
+- name: copy file (users)
+  copy:
+    src: "{{ item.users.src }}"
+    dest: "{{ wordpress_data_path }}/{{ item.dbname }}.csv"
+    owner: root
+    group: root
+    mode: 0644
+  register: check_copy_users
+  with_items: wordpress_installs
+  when: item.users.src is defined
+  tags: [configuration, wordpress, wordpress-users]
+
+- name: install (users)
+  shell: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' user import-csv {{ wordpress_data_path }}/{{ item.item.dbname }}.csv {{ '--skip-update' if item.item.users.skip_update | default(true) else '' }} --send-email"
+  register: check_installation_users
+  changed_when: "'Success' in check_installation_users.stdout"
+  with_items: check_copy_users.results
+  when: check_copy_users is defined and item.changed
+  tags: [configuration, wordpress, wordpress-users]

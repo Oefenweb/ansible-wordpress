@@ -1,5 +1,5 @@
----
 # test file for wordpress
+---
 - hosts: all
   remote_user: vagrant
   sudo: true
@@ -20,3 +20,4 @@
         admin_password: 'tuFr8=aPra@a'
         themes: []
         plugins: []
+        users: {}

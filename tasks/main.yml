@@ -1,7 +1,8 @@
----
 # tasks file for wordpress
+---
 - include: wp-cli.yml
 - include: core.yml
 - include: themes.yml
 - include: plugins.yml
+- include: users.yml
 - include: chown.yml
