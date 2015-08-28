@@ -51,6 +51,23 @@ None
 - hosts: all
   roles:
   - wordpress
+  vars:
+    wordpress_installs:
+      - name: wordpress
+        dbname: wordpress
+        dbuser: wordpress
+        dbpass: 'heCrE7*d2KEs'
+        dbhost: localhost
+        path: /var/www
+        url: http://localhost
+        title: wordpress
+        admin_name: admin
+        admin_email: root@localhost.localdomain
+        admin_password: 'tuFr8=aPra@a'
+        themes: []
+        plugins: []
+        users: {}
+        options: []
 ```
 
 #### License
