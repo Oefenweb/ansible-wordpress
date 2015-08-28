@@ -1,7 +1,7 @@
 # tasks file for wordpress, options
 ---
 - name: add options
-  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} {{ item.1.name }} {{ item.1.value }}"
+  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} '{{ item.1.name }}' '{{ item.1.value }}'"
   register: check_installation_options
   failed_when: False
   changed_when: "'Added' in check_installation_options.stdout"
@@ -12,7 +12,7 @@
   tags: [configuration, wordpress, wordpress-options]
 
 - name: update options
-  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} {{ item.1.name }} {{ item.1.value }}"
+  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} '{{ item.1.name }}' '{{ item.1.value }}'"
   register: check_installation_options
   changed_when: "'unchanged' not in check_installation_options.stdout"
   with_subelements:
@@ -22,7 +22,7 @@
   tags: [configuration, wordpress, wordpress-options]
 
 - name: delete options
-  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} {{ item.1.name }}"
+  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} '{{ item.1.name }}'"
   register: check_installation_options
   failed_when: False
   changed_when: "'Could not delete' not in check_installation_options.stderr"
