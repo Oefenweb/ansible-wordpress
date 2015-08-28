@@ -1,0 +1,9 @@
+# tasks file for wordpress, options
+---
+- name: add/update/delete options
+  shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} {{ item.1.name }} {{ item.1.value }}"
+  with_subelements:
+    - wordpress_installs
+    - options
+  when: item.1
+  tags: [configuration, wordpress, wordpress-options]

@@ -35,6 +35,10 @@ This role assumes a working virtual host (that handles `wordpress_url`).
   * `users`: [default: `{}`]: User declarations
   * `users.src`: [required]: The local path of the [csv file](http://wp-cli.org/commands/user/import-csv/) to import, can be absolute or relative (e.g. `../../../files/wordpress/users.csv`)
   * `users.skip_update`: [default: `true`]: Whether or not to update users that already exist
+  * `options`: [default: `[]`]: Options to add/update/delete options
+  * `options.command`: [required]: Add, update or delete.
+  * `options.name`: [required]: Name of the options.
+  * `options.value`: [required]: Value of the option.
 
 ## Dependencies
 

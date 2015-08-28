@@ -17,3 +17,4 @@ wordpress_installs:
     themes: []
     plugins: []
     users: {}
+    options: []
