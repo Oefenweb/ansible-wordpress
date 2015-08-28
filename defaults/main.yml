@@ -17,4 +17,22 @@ wordpress_installs:
     themes: []
     plugins: []
     users: {}
-    options: []
+    options:
+      - command: add
+        name: test
+        value: 'not existing'
+      - command: add
+        name: test
+        value: 'existing'
+      - command: update
+        name: test
+        value: 'existing'
+      - command: update
+        name: testtest
+        value: 'not existing'
+      - command: delete
+        name: test
+        value: 'existing'
+      - command: update
+        name: testtesttest
+        value: 'not existing'
