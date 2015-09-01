@@ -34,8 +34,8 @@
             name: testtest
             value: 'not existing'
           - command: delete
-            name: test
+            name: siteurl
             value: 'existing'
-          - command: update
+          - command: delete
             name: testtesttest
             value: 'not existing'
