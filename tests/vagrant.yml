@@ -18,25 +18,13 @@
         admin_name: admin
         admin_email: root@localhost.localdomain
         admin_password: 'tuFr8=aPra@a'
-        themes: []
-        plugins: []
+        themes:
+          - name: twentytwelve
+            activate: true
+          - name: twentythirteen
+        plugins:
+          - name: contact-form-7
+            activate: false
+          - name: simple-fields
         users: {}
-        options:
-          - command: add
-            name: test
-            value: 'not existing'
-          - command: add
-            name: test
-            value: 'existing'
-          - command: update
-            name: test
-            value: 'existing'
-          - command: update
-            name: testtest
-            value: 'not existing'
-          - command: delete
-            name: test
-            value: 'existing'
-          - command: update
-            name: testtesttest
-            value: 'not existing'
+        options: []
