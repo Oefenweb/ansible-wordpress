@@ -5,4 +5,5 @@
 - include: themes.yml
 - include: plugins.yml
 - include: users.yml
+- include: options.yml
 - include: chown.yml
