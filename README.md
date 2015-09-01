@@ -32,13 +32,13 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 * `wordpress_installs.{n}.admin_password`: [required]: Wordpress admin password (**make sure to change**)
 * `wordpress_installs.{n}.themes`: [required]: (Additional) themes to install (and activate)
 * `wordpress_installs.{n}.plugins`: [required]: (Additional) plugins to install (and activate)
-* `wordpress_installs.{n}.users`: [required]: User declarations
-* `wordpress_installs.{n}.users.{m}.src`: [required]: The local path of the [csv file](http://wp-cli.org/commands/user/import-csv/) to import, can be absolute or relative (e.g. `../../../files/wordpress/users.csv`)
-* `wordpress_installs.{n}.users.{m}.skip_update`: [default: `true`, optional]: Whether or not to update users that already exist
-* `wordpress_installs.{n}.options`: [required]: Options to add, update or delete.
-* `wordpress_installs.{n}.options.{m}.command`: [required]: Add, update or delete.
-* `wordpress_installs.{n}.options.{m}.name`: [required]: Name of the option.
-* `wordpress_installs.{n}.options.{m}.value`: [required]: Value of the option.
+* `wordpress_installs.{n}.users`: [optional]: User declarations
+* `wordpress_installs.{n}.users.src`: [required]: The local path of the [csv file](http://wp-cli.org/commands/user/import-csv/) to import, can be absolute or relative (e.g. `../../../files/wordpress/users.csv`)
+* `wordpress_installs.{n}.users.skip_update`: [default: `true`, optional]: Whether or not to update users that already exist
+* `wordpress_installs.{n}.options`: [required]: Options to add, update or delete
+* `wordpress_installs.{n}.options.{n}.command`: [required]: Add, update or delete
+* `wordpress_installs.{n}.options.{n}.name`: [required]: Name of the option
+* `wordpress_installs.{n}.options.{n}.value`: [required]: Value of the option
 
 ## Dependencies
 
