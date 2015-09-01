@@ -31,7 +31,11 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 * `wordpress_installs.{n}.admin_email`: [required]: Wordpress admin email address
 * `wordpress_installs.{n}.admin_password`: [required]: Wordpress admin password (**make sure to change**)
 * `wordpress_installs.{n}.themes`: [required]: (Additional) themes to install (and activate)
+* `wordpress_installs.{n}.themes.{n}.name`: [required]: Name of the theme
+* `wordpress_installs.{n}.themes.{n}.activate`: [default: `false`, optional]: Whether or not to activate the theme
 * `wordpress_installs.{n}.plugins`: [required]: (Additional) plugins to install (and activate)
+* `wordpress_installs.{n}.plugins.{n}.name`: [required]: Name of the plugin
+* `wordpress_installs.{n}.plugins.{n}.activate`: [default: `true`, optional]: Whether to activate or to deactivate the plugin
 * `wordpress_installs.{n}.users`: [optional]: User declarations
 * `wordpress_installs.{n}.users.src`: [required]: The local path of the [csv file](http://wp-cli.org/commands/user/import-csv/) to import, can be absolute or relative (e.g. `../../../files/wordpress/users.csv`)
 * `wordpress_installs.{n}.users.skip_update`: [default: `true`, optional]: Whether or not to update users that already exist
@@ -64,8 +68,14 @@ None
         admin_name: admin
         admin_email: root@localhost.localdomain
         admin_password: 'tuFr8=aPra@a'
-        themes: []
-        plugins: []
+        themes:
+          - name: twentytwelve
+            activate: true
+          - name: twentythirteen
+        plugins:
+          - name: contact-form-7
+            activate: false
+          - name: simple-fields
         users: {}
         options: []
 ```

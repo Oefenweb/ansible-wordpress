@@ -1,7 +1,7 @@
 # tasks file for wordpress, plugins
 ---
 - name: identify installation (plugin)
-  shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin is-installed {{ item.1 }}"
+  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin is-installed {{ item.1.name }}"
   register: check_installation_plugins
   failed_when: False
   changed_when: False
@@ -12,16 +12,36 @@
   tags: [configuration, wordpress, wordpress-plugins, wordpress-is-installed-plugin]
 
 - name: install (plugin)
-  shell: "wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' plugin install {{ item.item.1 }} --activate"
+  command: "wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' plugin install {{ item.item.1.name }}"
   with_items: check_installation_plugins.results
-  when: check_installation_plugins is defined and item.item.1 and item.rc != 0
+  when: check_installation_plugins is defined and item.item.1.name and item.rc != 0
   tags: [configuration, wordpress, wordpress-plugins, wordpress-install-plugin]
 
 - name: check install (plugin)
-  shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin is-installed {{ item.1 }}"
+  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin is-installed {{ item.1.name }}"
   changed_when: False
   with_subelements:
     - wordpress_installs
     - plugins
-  when: item.1
+  when: item.1.name
   tags: [configuration, wordpress, wordpress-plugins, wordpress-install-plugin-check]
+
+- name: activate (plugin)
+  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin activate {{ item.1.name }}"
+  register: check_activate_plugin
+  changed_when: "'Success: Plugin' in check_activate_plugin.stdout"
+  with_subelements:
+    - wordpress_installs
+    - plugins
+  when: item.1.name and item.1.activate | default(true)
+  tags: [configuration, wordpress, wordpress-plugins, wordpress-activate-plugin]
+
+- name: deactivate (plugin)
+  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin deactivate {{ item.1.name }}"
+  register: check_activate_plugin
+  changed_when: "'Success: Plugin' in check_activate_plugin.stdout"
+  with_subelements:
+    - wordpress_installs
+    - plugins
+  when: item.1.name and not item.1.activate | default(true)
+  tags: [configuration, wordpress, wordpress-plugins, wordpress-deactivate-plugin]
