@@ -34,7 +34,7 @@
             name: testtest
             value: 'not existing'
           - command: delete
-            name: siteurl
+            name: recently_edited
             value: 'existing'
           - command: delete
             name: testtesttest
