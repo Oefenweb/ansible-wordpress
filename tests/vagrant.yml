@@ -27,4 +27,22 @@
             activate: false
           - name: simple-fields
         users: {}
-        options: []
+        options:
+          - command: add
+            name: test
+            value: 'not existing'
+          - command: add
+            name: test
+            value: 'existing'
+          - command: update
+            name: test
+            value: 'existing'
+          - command: update
+            name: testtest
+            value: 'not existing'
+          - command: delete
+            name: recently_edited
+            value: 'existing'
+          - command: delete
+            name: testtesttest
+            value: 'not existing'

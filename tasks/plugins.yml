@@ -45,4 +45,3 @@
     - plugins
   when: item.1.name and not item.1.activate | default(true)
   tags: [configuration, wordpress, wordpress-plugins, wordpress-deactivate-plugin]
-  
