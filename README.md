@@ -16,29 +16,29 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 
 * `wordpress_wp_cli_install_dir` [default: `/usr/local/bin`]: Install directory for `wp-cli`
 
-* `wordpress_installs`:
-  * `name`: [default: `wordpress`]: Install name (not used for anything, just an identifier)
-  * `dbname`: [default: `wordpress`]: Database name
-  * `dbuser`: [default: `wordpress`]: Database username
-  * `dbpass`: [default: `'heCrE7*d2KEs'`]: Database password (**make sure to change**)
-  * `dbhost`: [default: `localhost`, optional]: Database host
-  * `path`: [default: `/var/www`]: Install directory for wordpress
-  * `owner`: [default: `www-data`]: The name of the user that should own the install
-  * `group`: [default: `owner`, `www-data`]: The name of the group that should own the install
-  * `url`: [default: `http://localhost`]: Wordpress url
-  * `title`: [default: `wordpress`]: Wordpress title
-  * `admin_name`: [default: `admin`, optional]: Wordpress admin (user)name
-  * `admin_email`: [default: `root@localhost`]: Wordpress admin email address
-  * `admin_password`: [default: `'tuFr8=aPra@a'`]: Wordpress admin password (**make sure to change**)
-  * `themes`: [default: `[]`]: (Additional) themes to install (and activate)
-  * `plugins`: [default: `[]`]: (Additional) plugins to install (and activate)
-  * `users`: [default: `{}`]: User declarations
-  * `users.src`: [required]: The local path of the [csv file](http://wp-cli.org/commands/user/import-csv/) to import, can be absolute or relative (e.g. `../../../files/wordpress/users.csv`)
-  * `users.skip_update`: [default: `true`]: Whether or not to update users that already exist
-  * `options`: [default: `[]`]: Options to add, update or delete.
-  * `options.command`: [required]: Add, update or delete.
-  * `options.name`: [required]: Name of the options.
-  * `options.value`: [required]: Value of the option.
+* `wordpress_installs`: [default: `[]`]: Installation declarations
+* `wordpress_installs.{n}.name`: [required]: Install name (not used for anything, just an identifier)
+* `wordpress_installs.{n}.dbname`: [required]: Database name
+* `wordpress_installs.{n}.dbuser`: [required]: Database username
+* `wordpress_installs.{n}.dbpass`: [required]: Database password (**make sure to change**)
+* `wordpress_installs.{n}.dbhost`: [default: `localhost`, optional]: Database host
+* `wordpress_installs.{n}.path`: [required]: Install directory for wordpress
+* `wordpress_installs.{n}.owner`: [default: `www-data`]: The name of the user that should own the install
+* `wordpress_installs.{n}.group`: [default: `owner`, `www-data`]: The name of the group that should own the install
+* `wordpress_installs.{n}.url`: [required]: Wordpress url
+* `wordpress_installs.{n}.title`: [required]: Wordpress title
+* `wordpress_installs.{n}.admin_name`: [default: `admin`, optional]: Wordpress admin (user)name
+* `wordpress_installs.{n}.admin_email`: [required]: Wordpress admin email address
+* `wordpress_installs.{n}.admin_password`: [required]: Wordpress admin password (**make sure to change**)
+* `wordpress_installs.{n}.themes`: [required]: (Additional) themes to install (and activate)
+* `wordpress_installs.{n}.plugins`: [required]: (Additional) plugins to install (and activate)
+* `wordpress_installs.{n}.users`: [required]: User declarations
+* `wordpress_installs.{n}.users.{m}.src`: [required]: The local path of the [csv file](http://wp-cli.org/commands/user/import-csv/) to import, can be absolute or relative (e.g. `../../../files/wordpress/users.csv`)
+* `wordpress_installs.{n}.users.{m}.skip_update`: [default: `true`, optional]: Whether or not to update users that already exist
+* `wordpress_installs.{n}.options`: [required]: Options to add, update or delete.
+* `wordpress_installs.{n}.options.{m}.command`: [required]: Add, update or delete.
+* `wordpress_installs.{n}.options.{m}.name`: [required]: Name of the option.
+* `wordpress_installs.{n}.options.{m}.value`: [required]: Value of the option.
 
 ## Dependencies
 
