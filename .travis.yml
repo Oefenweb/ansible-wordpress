@@ -84,7 +84,6 @@ script:
 
   # Run the role/playbook with ansible-playbook.
   - ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo -vvvv
-  - ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo -vvvv
 
   # Run the role/playbook again, checking to make sure it's idempotent.
   - >
