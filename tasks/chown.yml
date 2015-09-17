@@ -7,4 +7,3 @@
     group: "{{ item.group | default(item.owner) | default('www-data') }}"
     recurse: true
   with_items: wordpress_installs
-  tags: [configuration, wordpress, wordpress-chown]

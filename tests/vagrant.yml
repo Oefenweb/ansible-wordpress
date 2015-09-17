@@ -4,7 +4,7 @@
   remote_user: vagrant
   sudo: true
   roles:
-    - wordpress
+    - role: ../../
   vars:
     wordpress_installs:
       - name: wordpress

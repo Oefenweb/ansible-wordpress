@@ -1,24 +1,16 @@
 # tasks file for wordpress, options
 ---
-- name: disable w3c's object cache
-  lineinfile:
-    dest: "{{ item.path }}/wp-config.php"
-    line: "/** ansible-wordpress */ define('DONOTCACHCEOBJECT', true);"
-    validate: "php -l %s"
-  with_items: wordpress_installs
-  changed_when: false
-  tags: [configuration, wordpress, wordpress-options]
-
 - name: add options
   command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} '{{ item.1.name }}' '{{ item.1.value }}'"
   register: check_installation_options
-  failed_when: False
+  failed_when: false
   changed_when: "'Added' in check_installation_options.stdout"
   with_subelements:
     - wordpress_installs
     - options
   when: item.1.command == 'add'
-  tags: [configuration, wordpress, wordpress-options]
+  tags:
+    - wordpress-options-add
 
 - name: update options
   command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} '{{ item.1.name }}' '{{ item.1.value }}'"
@@ -28,25 +20,17 @@
     - wordpress_installs
     - options
   when: item.1.command == 'update'
-  tags: [configuration, wordpress, wordpress-options]
+  tags:
+    - wordpress-options-update
 
 - name: delete options
   command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} '{{ item.1.name }}'"
   register: check_installation_options
-  failed_when: False
+  failed_when: false
   changed_when: "'Could not delete' not in check_installation_options.stderr"
   with_subelements:
     - wordpress_installs
     - options
   when: item.1.command == 'delete'
-  tags: [configuration, wordpress, wordpress-options]
-
-- name: enable w3c's object cache
-  lineinfile:
-    dest: "{{ item.path }}/wp-config.php"
-    line: "/** ansible-wordpress */ define('DONOTCACHCEOBJECT', true);"
-    validate: "php -l %s"
-    state: absent
-  with_items: wordpress_installs
-  changed_when: false
-  tags: [configuration, wordpress, wordpress-options]
+  tags:
+    -   wordpress-options-delete

@@ -3,7 +3,7 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - role: ansible-wordpress
+    - role: ../../
   vars:
     wordpress_installs:
       - name: wordpress
