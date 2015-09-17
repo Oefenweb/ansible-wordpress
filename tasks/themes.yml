@@ -1,32 +1,35 @@
 # tasks file for wordpress, themes
 ---
-- name: identify installation (theme)
+- name: themes | identify installation
   command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1.name }}"
   register: check_installation_themes
-  failed_when: False
-  changed_when: False
+  failed_when: false
+  changed_when: false
   with_subelements:
     - wordpress_installs
     - themes
   when: item.1.name
-  tags: [configuration, wordpress, wordpress-themes, wordpress-is-installed-theme]
+  tags:
+    - wordpress-themes-is-installed-theme
 
-- name: install (theme)
+- name: themes | install
   command: "wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' theme install {{ item.item.1.name }}"
   with_items: check_installation_themes.results
   when: check_installation_themes is defined and item.item.1.name and item.rc != 0
-  tags: [configuration, wordpress, wordpress-themes, wordpress-install-theme]
+  tags:
+    - wordpress-themes-install-theme
 
-- name: check install (theme)
+- name: themes | check install
   command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1.name }}"
-  changed_when: False
+  changed_when: false
   with_subelements:
     - wordpress_installs
     - themes
   when: item.1.name
-  tags: [configuration, wordpress, wordpress-themes, wordpress-install-theme-check]
+  tags:
+    - wordpress-themes-install-theme-check
 
-- name: activate (theme)
+- name: themes | activate
   command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme activate {{ item.1.name }}"
   register: check_activate_theme
   changed_when: "'Success: Switched to' in check_activate_theme.stdout"
@@ -34,4 +37,5 @@
     - wordpress_installs
     - themes
   when: item.1.name and item.1.activate | default(false)
-  tags: [configuration, wordpress, wordpress-themes, wordpress-activate-theme]
+  tags:
+    - wordpress-themes-activate-theme

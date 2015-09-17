@@ -1,9 +1,43 @@
 # tasks file for wordpress
 ---
 - include: wp-cli.yml
+  tags:
+    - configuration
+    - wordpress
+    - wordpress-wp-cli
+
 - include: core.yml
+  tags:
+    - configuration
+    - wordpress
+    - wordpress-core
+
 - include: themes.yml
+  tags:
+    - configuration
+    - wordpress
+    - wordpress-themes
+
 - include: plugins.yml
+  tags:
+    - configuration
+    - wordpress
+    - wordpress-plugins
+
 - include: users.yml
+  tags:
+    - configuration
+    - wordpress
+    - wordpress-users
+
 - include: options.yml
+  tags:
+    - configuration
+    - wordpress
+    - wordpress-options
+
 - include: chown.yml
+  tags:
+    - configuration
+    - wordpress
+    - wordpress-chown

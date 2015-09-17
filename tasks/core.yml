@@ -1,42 +1,48 @@
 # tasks file for wordpress, core
 ---
-- name: check download
+- name: core | check download
   shell: "ls {{ item.path }} | grep -q 'wp-'"
   register: check_download
-  failed_when: False
-  changed_when: False
+  failed_when: false
+  changed_when: false
   with_items: wordpress_installs
-  tags: [configuration, wordpress, wordpress-core, wordpress-is-downloaded]
+  tags:
+    - wordpress-core-is-downloaded
 
-- name: download
-  shell: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' core download"
+- name: core | download
+  command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' core download"
   with_items: check_download.results
   when: item.rc != 0
-  tags: [configuration, wordpress, wordpress-core, wordpress-downloaded]
+  tags:
+    - wordpress-core-downloaded
 
-- name: configure
-  shell: "wp-cli --allow-root --no-color --path='{{ item.path }}' core config --dbname='{{ item.dbname }}' --dbuser='{{ item.dbuser }}' --dbpass='{{ item.dbpass }}' --dbhost='{{ item.dbhost | default('localhost') }}'"
+- name: core | configure
+  command: "wp-cli --allow-root --no-color --path='{{ item.path }}' core config --dbname='{{ item.dbname }}' --dbuser='{{ item.dbuser }}' --dbpass='{{ item.dbpass }}' --dbhost='{{ item.dbhost | default('localhost') }}'"
   args:
     creates: "{{ item.path }}/wp-config.php"
   with_items: wordpress_installs
-  tags: [configuration, wordpress, wordpress-core, wordpress-configure]
+  tags:
+    - wordpress-core-configure
 
-- name: identify installation
-  shell: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
+- name: core | identify installation
+  command: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
   register: check_installation
-  failed_when: False
-  changed_when: False
+  failed_when: false
+  changed_when: false
   with_items: wordpress_installs
-  tags: [configuration, wordpress, wordpress-core, wordpress-is-installed]
+  tags:
+    - wordpress-core-is-installed
 
-- name: install
-  shell: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' core install --url='{{ item.item.url }}' --title='{{ item.item.title }}' --admin_name='{{ item.item.admin_name | default('admin') }}' --admin_email='{{ item.item.admin_email }}' --admin_password='{{ item.item.admin_password }}'"
+- name: core | install
+  command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' core install --url='{{ item.item.url }}' --title='{{ item.item.title }}' --admin_name='{{ item.item.admin_name | default('admin') }}' --admin_email='{{ item.item.admin_email }}' --admin_password='{{ item.item.admin_password }}'"
   with_items: check_installation.results
   when: item.rc != 0
-  tags: [configuration, wordpress, wordpress-core, wordpress-install]
+  tags:
+    - wordpress-core-install
 
-- name: check install
-  shell: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
-  changed_when: False
+- name: core | check install
+  command: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
+  changed_when: false
   with_items: wordpress_installs
-  tags: [configuration, wordpress, wordpress-core, wordpress-install-check]
+  tags:
+    - wordpress-core-install-check
