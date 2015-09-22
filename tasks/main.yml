@@ -36,6 +36,12 @@
     - wordpress
     - wordpress-options
 
+- include: db.yml
+  tags:
+    - configuration
+    - wordpress
+    - wordpress-db
+
 - include: chown.yml
   tags:
     - configuration

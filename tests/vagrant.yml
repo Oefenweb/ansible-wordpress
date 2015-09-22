@@ -46,3 +46,7 @@
           - command: delete
             name: testtesttest
             value: 'not existing'
+        db_files:
+          - '../files/queries.sql'
+        db_queries:
+          - 'SELECT 1'

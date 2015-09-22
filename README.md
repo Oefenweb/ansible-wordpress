@@ -43,6 +43,8 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 * `wordpress_installs.{n}.options.{n}.command`: [required]: Add, update or delete
 * `wordpress_installs.{n}.options.{n}.name`: [required]: Name of the option
 * `wordpress_installs.{n}.options.{n}.value`: [required]: Value of the option
+* `wordpress_installs.{n}.db_files`: [default: `[]`, optional]: A list of (local paths to) sql files to execute, paths can be absolute or relative (e.g. `../../../files/wordpress/queries.sql`)
+* `wordpress_installs.{n}.db_queries`: [default: `[]`, optional]: A list of queries to execute
 
 ## Dependencies
 
@@ -78,6 +80,8 @@ None
           - name: simple-fields
         users: {}
         options: []
+        db_files: []
+        db_queries: []
 ```
 
 #### License
