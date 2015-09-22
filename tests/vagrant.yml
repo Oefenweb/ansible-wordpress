@@ -31,6 +31,7 @@
           - command: add
             name: test
             value: 'not existing'
+            autoload: false
           - command: add
             name: test
             value: 'existing'

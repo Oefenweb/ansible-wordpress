@@ -1,7 +1,7 @@
 # tasks file for wordpress, options
 ---
 - name: add options
-  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} '{{ item.1.name }}' '{{ item.1.value }}'"
+  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' option {{ item.1.command }} '{{ item.1.name }}' '{{ item.1.value }}' --autoload={{ 'yes' if item.1.autoload | default(true) else 'no' }}"
   register: check_installation_options
   failed_when: false
   changed_when: "'Added' in check_installation_options.stdout"
