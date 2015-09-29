@@ -45,3 +45,5 @@
           - command: delete
             name: testtesttest
             value: 'not existing'
+        queries:
+          - "UPDATE `wp_options` SET `option_value` = 0 WHERE `option_name` = 'comments_notify'"
