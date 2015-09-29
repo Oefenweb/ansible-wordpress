@@ -36,11 +36,11 @@
     - wordpress
     - wordpress-options
 
-- include: db.yml
+- include: queries.yml
   tags:
     - configuration
     - wordpress
-    - wordpress-db
+    - wordpress-queries
 
 - include: chown.yml
   tags:
