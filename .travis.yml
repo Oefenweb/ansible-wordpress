@@ -49,6 +49,7 @@ branches:
 
 matrix:
   allow_failures:
+    # See https://github.com/ansible/ansible/issues/8233
     - env: ANSIBLE_VERSION=1.6.8
     - env: ANSIBLE_VERSION=1.6.7
     # See https://github.com/ansible/ansible/issues/6412
