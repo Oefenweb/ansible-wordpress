@@ -45,3 +45,6 @@
           - command: delete
             name: testtesttest
             value: 'not existing'
+        queries:
+          - "UPDATE wp_options SET option_value = 0 WHERE option_name = 'comments_notify'"
+          - "INSERT IGNORE INTO wp_options (option_name, option_value) VALUES ('mainwp_child_uniqueId', 'key')"

@@ -44,6 +44,7 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 * `wordpress_installs.{n}.options.{n}.name`: [required]: Name of the option
 * `wordpress_installs.{n}.options.{n}.value`: [required]: Value of the option
 * `wordpress_installs.{n}.options.{n}.autoload`: [default: `true`, optional]: Whether this option should be automatically loaded (only supported for add command)
+* `wordpress_installs.{n}.queries`: [default: `[]`, optional]: A list of queries to execute
 
 ## Dependencies
 
@@ -79,6 +80,7 @@ None
           - name: simple-fields
         users: {}
         options: []
+        queries: []
 ```
 
 #### License

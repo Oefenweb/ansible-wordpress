@@ -47,3 +47,5 @@
           - command: delete
             name: testtesttest
             value: 'not existing'
+        queries:
+          - 'SELECT 1'
