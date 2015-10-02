@@ -1,7 +1,7 @@
 # tasks file for wordpress, queries
 ---
 - name: queries | execute queries
-  command: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' db query \"{{ item.1 }};SELECT ROW_COUNT();\""
+  shell: "wp-cli --allow-root --no-color --path='{{ item.0.path }}' db query \"{{ item.1 }};SELECT ROW_COUNT();\""
   register: check_execution_queries
   changed_when: "check_execution_queries.stdout_lines[-1]|int > 0"
   with_subelements:
