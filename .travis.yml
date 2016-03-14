@@ -53,7 +53,7 @@ before_install:
   - sudo apt-get update -qq
 
   # Install and configure dependencies
-  - sudo apt-get install wget apache2 php5 php5-mysql libapache2-mod-php5
+  - sudo apt-get install --yes wget apache2 php5 php5-mysql libapache2-mod-php5
   - sudo a2enmod rewrite
   - sudo service apache2 reload
 
