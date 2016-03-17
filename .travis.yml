@@ -51,6 +51,12 @@ before_install:
 
   # Install and configure dependencies
   - sudo apt-get install --yes wget apache2 php5 php5-mysql libapache2-mod-php5 mysql-server
+
+  # Remove default index page of trusty
+  - sudo rm -f /var/www/index.html || true
+  # Fix default document root of trusty
+  - sudo sed -i 's|/var/www/html|/var/www|g' /etc/apache2/sites-available/000-default.conf || true
+
   - sudo a2enmod rewrite
   - sudo service apache2 reload
 
@@ -81,6 +87,10 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Test wordpress installation
+  - >
+    wget http://localhost/
+  - >
+    wget http://localhost/wp-login.php
   - >
     wget http://localhost/wp-login.php -O /dev/null -S --quiet 2>&1
     | grep -q '200 OK'
