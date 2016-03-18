@@ -10,7 +10,7 @@
     - wordpress-core-is-downloaded
 
 - name: core | download
-  command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' core download"
+  command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' --locale='{{ item.item.locale | default('en_US') }}' core download"
   with_items: check_download.results
   when: item.rc != 0
   tags:
