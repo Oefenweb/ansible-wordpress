@@ -6,7 +6,7 @@
   failed_when: false
   changed_when: "'Added' in check_installation_options.stdout"
   with_subelements:
-    - wordpress_installs
+    - "{{ wordpress_installs }}"
     - options
   when: item.1.command == 'add'
   tags:
@@ -17,7 +17,7 @@
   register: check_installation_options
   changed_when: "'unchanged' not in check_installation_options.stdout"
   with_subelements:
-    - wordpress_installs
+    - "{{ wordpress_installs }}"
     - options
   when: item.1.command == 'update'
   tags:
@@ -29,7 +29,7 @@
   failed_when: false
   changed_when: "'Could not delete' not in check_installation_options.stderr"
   with_subelements:
-    - wordpress_installs
+    - "{{ wordpress_installs }}"
     - options
   when: item.1.command == 'delete'
   tags:
