@@ -18,7 +18,7 @@
     group: root
     mode: 0644
   register: check_copy_users
-  with_items: wordpress_installs
+  with_items: "{{ wordpress_installs }}"
   when: item.users.src is defined
   tags:
     - wordpress-users-copy-file
@@ -27,7 +27,7 @@
   command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' user import-csv {{ wordpress_data_path }}/{{ item.item.dbname }}.csv {{ '--skip-update' if item.item.users.skip_update | default(true) else '' }} --send-email"
   register: check_installation_users
   changed_when: "'Success' in check_installation_users.stdout"
-  with_items: check_copy_users.results
+  with_items: "{{ check_copy_users.results }}"
   when: check_copy_users is defined and item.changed
   tags:
     - wordpress-users-import-file

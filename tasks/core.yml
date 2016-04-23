@@ -5,13 +5,13 @@
   register: check_download
   failed_when: false
   changed_when: false
-  with_items: wordpress_installs
+  with_items: "{{ wordpress_installs }}"
   tags:
     - wordpress-core-is-downloaded
 
 - name: core | download
   command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' --locale='{{ item.item.locale | default('en_US') }}' core download"
-  with_items: check_download.results
+  with_items: "{{ check_download.results }}"
   when: item.rc != 0
   tags:
     - wordpress-core-downloaded
@@ -20,7 +20,7 @@
   command: "wp-cli --allow-root --no-color --path='{{ item.path }}' core config --dbname='{{ item.dbname }}' --dbuser='{{ item.dbuser }}' --dbpass='{{ item.dbpass }}' --dbhost='{{ item.dbhost | default('localhost') }}'"
   args:
     creates: "{{ item.path }}/wp-config.php"
-  with_items: wordpress_installs
+  with_items: "{{ wordpress_installs }}"
   tags:
     - wordpress-core-configure
 
@@ -29,13 +29,13 @@
   register: check_installation
   failed_when: false
   changed_when: false
-  with_items: wordpress_installs
+  with_items: "{{ wordpress_installs }}"
   tags:
     - wordpress-core-is-installed
 
 - name: core | install
   command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' core install --url='{{ item.item.url }}' --title='{{ item.item.title }}' --admin_name='{{ item.item.admin_name | default('admin') }}' --admin_email='{{ item.item.admin_email }}' --admin_password='{{ item.item.admin_password }}'"
-  with_items: check_installation.results
+  with_items: "{{ check_installation.results }}"
   when: item.rc != 0
   tags:
     - wordpress-core-install
@@ -43,6 +43,6 @@
 - name: core | check install
   command: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
   changed_when: false
-  with_items: wordpress_installs
+  with_items: "{{ wordpress_installs }}"
   tags:
     - wordpress-core-install-check
