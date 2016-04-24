@@ -17,7 +17,7 @@
     - wordpress-core-downloaded
 
 - name: core | configure
-  command: "wp-cli --allow-root --no-color --path='{{ item.path }}' core config --dbname='{{ item.dbname }}' --dbuser='{{ item.dbuser }}' --dbpass='{{ item.dbpass }}' --dbhost='{{ item.dbhost | default('localhost') }}'"
+  command: "wp-cli --allow-root --no-color --path='{{ item.path }}' core config --dbname='{{ item.dbname }}' --dbuser='{{ item.dbuser }}' --dbpass='{{ item.dbpass }}' --dbhost='{{ item.dbhost | default('localhost') }}' --dbprefix='{{ item.dbprefix | default('wp_') }}'"
   args:
     creates: "{{ item.path }}/wp-config.php"
   with_items: "{{ wordpress_installs }}"
