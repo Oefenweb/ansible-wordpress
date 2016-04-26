@@ -14,8 +14,8 @@
 
 - name: plugins | install
   command: "wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' plugin install {{ item.item.1.name }}"
-  with_items: "{{ check_installation_plugins.results }}"
-  when: check_installation_plugins is defined and item.item.1.name and item.rc != 0
+  with_items: "{{ check_installation_plugins.results | default([]) }}"
+  when: item.item.1.name and item.rc != 0
   tags:
     - wordpress-plugins-install-plugin
 
