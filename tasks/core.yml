@@ -11,7 +11,7 @@
 
 - name: core | download
   command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' --locale='{{ item.item.locale | default('en_US') }}' core download"
-  with_items: "{{ check_download.results }}"
+  with_items: "{{ check_download.results | default([]) }}"
   when: item.rc != 0
   tags:
     - wordpress-core-downloaded
@@ -35,7 +35,7 @@
 
 - name: core | install
   command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' core install --url='{{ item.item.url }}' --title='{{ item.item.title }}' --admin_name='{{ item.item.admin_name | default('admin') }}' --admin_email='{{ item.item.admin_email }}' --admin_password='{{ item.item.admin_password }}'"
-  with_items: "{{ check_installation.results }}"
+  with_items: "{{ check_installation.results | default([]) }}"
   when: item.rc != 0
   tags:
     - wordpress-core-install
