@@ -1,7 +1,7 @@
 # tasks file for wordpress, core
 ---
 - name: core | check download
-  shell: "ls {{ item.path }} | grep -q 'wp-'"
+  command: "test -f {{ item.path }}/wp-load.php"
   register: check_download
   failed_when: false
   changed_when: false
