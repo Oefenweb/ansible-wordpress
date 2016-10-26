@@ -12,6 +12,12 @@
     - wordpress
     - wordpress-core
 
+- include: wp-cron.yml
+  tags:
+    - configuration
+    - wordpress
+    - wordpress-wp-cron
+
 - include: themes.yml
   tags:
     - configuration

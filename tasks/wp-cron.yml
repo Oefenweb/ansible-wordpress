@@ -1,0 +1,38 @@
+# tasks file for wordpress, wp-cli
+---
+- name: wp-cron | disable wp-cron
+  lineinfile:
+    dest: "{{ item.path }}/wp-config.php"
+    line: "{{ wordpress_disable_wp_cron_line }}"
+    insertafter: '^\<\?php'
+    state: present
+  with_items: "{{ wordpress_installs }}"
+  when: item.cron is defined and item.cron.use_crond | default(false) == true
+  tags:
+    - wordpress-wp-cron-install
+
+- name: wp-cron | enable wp-cron
+  lineinfile:
+    dest: "{{ item.path }}/wp-config.php"
+    line: "{{ wordpress_disable_wp_cron_line }}"
+    state: absent
+  with_items: "{{ wordpress_installs }}"
+  when: item.cron is undefined or item.cron.use_crond | default(false) == false
+  tags:
+    - wordpress-wp-cron-install
+
+- name: wp-cron | enable crond
+  cron:
+    name: "{{ item.name }}"
+    state: "{{ 'present' if item.cron is defined and item.cron.use_crond | default(false) else 'absent' }}"
+    job: "wget -O /dev/null {{ item.url }}/wp-cron.php > /dev/null 2>&1"
+    day: "{{ item.cron.schedule.day if item.cron is defined and item.cron.schedule is defined and item.cron.schedule.day is defined else '*' }}"
+    hour: "{{ item.cron.schedule.hour if item.cron is defined and item.cron.schedule is defined and item.cron.schedule.hour is defined else '*' }}"
+    minute: "{{ item.cron.schedule.minute if item.cron is defined and item.cron.schedule is defined and item.cron.schedule.minute is defined else '*' }}"
+    month: "{{ item.cron.schedule.month if item.cron is defined and item.cron.schedule is defined and item.cron.schedule.month is defined else '*' }}"
+    weekday: "{{ item.cron.schedule.weekday if item.cron is defined and item.cron.schedule is defined and item.cron.schedule.weekday is defined else '*' }}"
+    cron_file: wp-cron
+    user: "{{ item.cron.user if item.cron is defined and item.cron.user is defined else 'www-data' }}"
+  with_items: "{{ wordpress_installs }}"
+  tags:
+    - wordpress-wp-cron-install
