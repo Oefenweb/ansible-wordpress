@@ -9,7 +9,7 @@
   with_items: "{{ wordpress_installs }}"
   when: item.cron is defined and item.cron.use_crond | default(false) == true
   tags:
-    - wordpress-wp-cron-install
+    - wordpress-wp-cron-disable-wp-cron
 
 - name: wp-cron | enable wp-cron
   lineinfile:
@@ -19,7 +19,7 @@
   with_items: "{{ wordpress_installs }}"
   when: item.cron is undefined or item.cron.use_crond | default(false) == false
   tags:
-    - wordpress-wp-cron-install
+    - wordpress-wp-cron-enable-wp-cron
 
 - name: wp-cron | enable crond
   cron:
@@ -35,4 +35,4 @@
     user: "{{ item.cron.user if item.cron is defined and item.cron.user is defined else 'www-data' }}"
   with_items: "{{ wordpress_installs }}"
   tags:
-    - wordpress-wp-cron-install
+    - wordpress-wp-cron-enable-crond
