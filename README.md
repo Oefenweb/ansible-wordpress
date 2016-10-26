@@ -32,6 +32,15 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 * `wordpress_installs.{n}.admin_name`: [default: `admin`, optional]: Wordpress admin (user)name
 * `wordpress_installs.{n}.admin_email`: [required]: Wordpress admin email address
 * `wordpress_installs.{n}.admin_password`: [required]: Wordpress admin password (**make sure to change**)
+* `wordpress_installs.{n}.cron`: [optional]: Cron declaration
+* `wordpress_installs.{n}.cron.use_crond`: [default: `false`]: Whether or not to use `crond` instead of wp-cron
+* `wordpress_installs.{n}.cron.user`: [default: `www-data`]: User to run job as
+* `wordpress_installs.{n}.cron.schedule`: [optional]: Cron schedule declaration
+* `wordpress_installs.{n}.cron.schedule.day`: [default: `*`]: Day when the job should run
+* `wordpress_installs.{n}.cron.schedule.hour`: [default: `*`]: Hour when the job should run
+* `wordpress_installs.{n}.cron.schedule.minute`: [default: `*`]: Minute when the job should run
+* `wordpress_installs.{n}.cron.schedule.month`: [default: `*`]: Month when the job should run
+* `wordpress_installs.{n}.cron.schedule.weekday`: [default: `*`]: Weekday when the job should run
 * `wordpress_installs.{n}.themes`: [required]: (Additional) themes to install (and activate)
 * `wordpress_installs.{n}.themes.{n}.name`: [required]: Name of the theme
 * `wordpress_installs.{n}.themes.{n}.activate`: [default: `false`, optional]: Whether or not to activate the theme

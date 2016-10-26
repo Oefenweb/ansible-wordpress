@@ -1,3 +1,4 @@
 # vars file for wordpress
 ---
 wordpress_data_path: /var/lib/ansible/wordpress
+wordpress_disable_wp_cron_line: "define('DISABLE_WP_CRON', true);"
