@@ -36,7 +36,7 @@
   command: >
     wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin activate {{ item.1.name }}
   register: _check_activate_plugin
-  changed_when: "'Success: Plugin' in _check_activate_plugin.stdout"
+  changed_when: "'Success: Plugin' in _check_activate_plugin.stdout and not 'already' in _check_activate_plugin.stdout"
   with_subelements:
     - "{{ wordpress_installs }}"
     - plugins
@@ -47,8 +47,8 @@
 - name: plugins | deactivate
   command: >
     wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin deactivate {{ item.1.name }}
-  register: _check_activate_plugin
-  changed_when: "'Success: Plugin' in _check_activate_plugin.stdout"
+  register: _check_deactivate_plugin
+  changed_when: "'Success: Plugin' in _check_deactivate_plugin.stdout and not 'already' in _check_deactivate_plugin.stdout"
   with_subelements:
     - "{{ wordpress_installs }}"
     - plugins
