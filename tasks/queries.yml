@@ -4,7 +4,7 @@
   command: >
     wp-cli db query
     --allow-root --no-color --path='{{ item.0.path }}'
-    '{{ item.1 }}; SELECT ROW_COUNT();'
+    "{{ item.1 }}; SELECT ROW_COUNT();"
   register: _check_execution_queries
   changed_when: "_check_execution_queries.stdout_lines[-1] | int > 0"
   with_subelements:
