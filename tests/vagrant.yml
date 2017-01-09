@@ -13,7 +13,7 @@
         dbpass: 'heCrE7*d2KEs'
         dbhost: localhost
         path: /var/www
-        url: "http://{{ ansible_eth1.ipv4.address }}"
+        url: "http://{{ ansible_default_ipv4['address'] }}"
         title: wordpress
         admin_name: admin
         admin_email: root@localhost.localdomain
