@@ -5,6 +5,9 @@ dist: trusty
 language: python
 python: "2.7"
 
+services:
+  - mysql
+
 env:
   - ANSIBLE_VERSION=latest
   - ANSIBLE_VERSION=2.2.0.0
@@ -58,7 +61,7 @@ before_install:
   - sudo apt-get update -qq
 
   # Install and configure dependencies
-  - sudo apt-get install --yes wget apache2 php5 php5-mysql libapache2-mod-php5 mysql-server
+  - sudo apt-get install --yes wget apache2 php5 php5-mysql libapache2-mod-php5
 
   # Remove default index page of trusty
   - sudo rm -f /var/www/index.html || true
