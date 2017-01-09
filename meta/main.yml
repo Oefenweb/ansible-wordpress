@@ -1,4 +1,4 @@
-# meta file for screen
+# meta file for wordpress
 ---
 galaxy_info:
   author: Mischa ter Smitten
@@ -9,12 +9,11 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-        - lucid
         - precise
         - trusty
+        - xenial
     - name: Debian
       versions:
-        - squeeze
         - wheezy
         - jessie
   galaxy_tags:

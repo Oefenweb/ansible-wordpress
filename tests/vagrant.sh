@@ -27,6 +27,8 @@ echo 'mysql-server-5.1 mysql-server/root_password password vagrant' | debconf-se
 echo 'mysql-server-5.1 mysql-server/root_password_again password vagrant' | debconf-set-selections;
 echo 'mysql-server-5.5 mysql-server/root_password password vagrant' | debconf-set-selections;
 echo 'mysql-server-5.5 mysql-server/root_password_again password vagrant' | debconf-set-selections;
+echo 'mysql-server-5.6 mysql-server/root_password password vagrant' | debconf-set-selections;
+echo 'mysql-server-5.6 mysql-server/root_password_again password vagrant' | debconf-set-selections;
 
 apt-install mysql-server;
 
@@ -37,7 +39,13 @@ user = root
 password = vagrant
 EOF
 
-apt-install wget apache2 php5 php5-cli php5-mysql libapache2-mod-php5;
+# No PHP 5 support in 16.04
+if $(lsb_release -r | grep -q '16.04'); then
+  PHP_VERSION='7.0';
+else
+  PHP_VERSION='5';
+fi
+apt-install wget apache2 "php${PHP_VERSION}" "php${PHP_VERSION}-cli" "php${PHP_VERSION}-mysql" "libapache2-mod-php${PHP_VERSION}";
 
 # Remove default index page of Ubuntu 1(0|2).04 / Debian (6|7)
 if [ -f /var/www/index.html ]; then

@@ -1,8 +1,8 @@
 # tasks file for wordpress, core
 ---
 - name: core | check download
-  command: "test -f {{ item.path }}/wp-load.php"
-  register: check_download
+  command: test -f {{ item.path }}/wp-load.php
+  register: _check_download
   failed_when: false
   changed_when: false
   with_items: "{{ wordpress_installs }}"
@@ -10,14 +10,24 @@
     - wordpress-core-is-downloaded
 
 - name: core | download
-  command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' --locale='{{ item.item.locale | default('en_US') }}' core download"
-  with_items: "{{ check_download.results | default([]) }}"
+  command: >
+    wp-cli core download
+    --allow-root --no-color --path='{{ item.item.path }}'
+    --locale='{{ item.item.locale | default('en_US') }}'
+  with_items: "{{ _check_download.results | default([]) }}"
   when: item.rc != 0
   tags:
     - wordpress-core-downloaded
 
 - name: core | configure
-  command: "wp-cli --allow-root --no-color --path='{{ item.path }}' core config --dbname='{{ item.dbname }}' --dbuser='{{ item.dbuser }}' --dbpass='{{ item.dbpass }}' --dbhost='{{ item.dbhost | default('localhost') }}' --dbprefix='{{ item.dbprefix | default('wp_') }}'"
+  command: >
+    wp-cli core config
+    --allow-root --no-color --path='{{ item.path }}'
+    --dbname='{{ item.dbname }}'
+    --dbuser='{{ item.dbuser }}'
+    --dbpass='{{ item.dbpass }}'
+    --dbhost='{{ item.dbhost | default('localhost') }}'
+    --dbprefix='{{ item.dbprefix | default('wp_') }}'
   args:
     creates: "{{ item.path }}/wp-config.php"
   with_items: "{{ wordpress_installs }}"
@@ -25,8 +35,10 @@
     - wordpress-core-configure
 
 - name: core | identify installation
-  command: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
-  register: check_installation
+  command: >
+    wp-cli core is-installed
+    --allow-root --no-color --path='{{ item.path }}'
+  register: _check_installation
   failed_when: false
   changed_when: false
   with_items: "{{ wordpress_installs }}"
@@ -34,14 +46,22 @@
     - wordpress-core-is-installed
 
 - name: core | install
-  command: "wp-cli --allow-root --no-color --path='{{ item.item.path }}' core install --url='{{ item.item.url }}' --title='{{ item.item.title }}' --admin_name='{{ item.item.admin_name | default('admin') }}' --admin_email='{{ item.item.admin_email }}' --admin_password='{{ item.item.admin_password }}'"
-  with_items: "{{ check_installation.results | default([]) }}"
+  command: >
+    wp-cli core install
+    --allow-root --no-color --path='{{ item.item.path }}'
+    --url='{{ item.item.url }}' --title='{{ item.item.title }}'
+    --admin_name='{{ item.item.admin_name | default('admin') }}'
+    --admin_email='{{ item.item.admin_email }}'
+    --admin_password='{{ item.item.admin_password }}'
+  with_items: "{{ _check_installation.results | default([]) }}"
   when: item.rc != 0
   tags:
     - wordpress-core-install
 
 - name: core | check install
-  command: "wp-cli --allow-root --no-color --path='{{ item.path }}' core is-installed"
+  command: >
+    wp-cli core is-installed
+    --allow-root --no-color --path='{{ item.path }}'
   changed_when: false
   with_items: "{{ wordpress_installs }}"
   tags:

@@ -13,7 +13,7 @@
         dbpass: 'heCrE7*d2KEs'
         dbhost: localhost
         path: /var/www
-        url: "http://{{ ansible_eth1.ipv4.address }}"
+        url: "http://{{ ansible_default_ipv4['address'] }}"
         title: wordpress
         admin_name: admin
         admin_email: root@localhost.localdomain
@@ -48,4 +48,5 @@
             name: testtesttest
             value: 'not existing'
         queries:
-          - 'SELECT 1'
+          - "UPDATE wp_options SET option_value = 0 WHERE option_name = 'comments_notify'"
+          - "INSERT IGNORE INTO wp_options (option_name, option_value) VALUES ('mainwp_child_uniqueId', 'key')"
