@@ -39,8 +39,13 @@ user = root
 password = vagrant
 EOF
 
-# No PHP 5 support in 16.04
-if $(lsb_release -r | grep -q '16.04'); then
+# No .my.cnf needed for Debian 9 (MariaDB)
+if $(lsb_release -c | grep -qE '(stretch)'); then
+  rm ~/.my.cnf;
+fi
+
+# No PHP 5 support in Ubuntu 16.04 and Debian 9
+if $(lsb_release -c | grep -qE '(xenial|stretch)'); then
   PHP_VERSION='7.0';
 else
   PHP_VERSION='5';

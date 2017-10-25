@@ -1,0 +1,15 @@
+# tasks file for wordpress, configure
+---
+- name: configure | create (data) directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - "{{ wordpress_data_path }}/themes"
+    - "{{ wordpress_data_path }}/plugins"
+    - "{{ wordpress_data_path }}/users"
+  tags:
+    - wordpress-configure-create-data-directory

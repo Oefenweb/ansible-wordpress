@@ -13,13 +13,66 @@
   tags:
     - wordpress-plugins-is-installed-plugin
 
-- name: plugins | install
+- name: plugins | install | wordpress.org
   command: >
-    wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' plugin install {{ item.item.1.name }}
+    wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
+    {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ item.item.1.name }}
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
-  when: item.item.1.name and item.rc != 0
+  when: >
+    item.item.1.name
+    and item.item.1.zip | default('') == ''
+    and item.item.1.url | default('') == ''
+    and item.rc != 0
   tags:
     - wordpress-plugins-install-plugin
+    - wordpress-plugins-install-plugin-wordpress_org
+
+- name: plugins | install | zip | copy
+  copy:
+    src: "{{ item.item.1.zip }}"
+    dest: "{{ wordpress_data_path }}/plugins/{{ item.item.1.name }}.zip"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ _check_installation_plugins.results | default([]) }}"
+  when: >
+    item.item.1.name
+    and item.item.1.zip | default('') != ''
+    and item.item.1.url | default('') == ''
+    and item.rc != 0
+  tags:
+    - wordpress-plugins-install-plugin
+    - wordpress-plugins-install-plugin-zip
+    - wordpress-plugins-install-plugin-zip-copy
+
+- name: plugins | install | zip | install
+  command: >
+    wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
+    {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ wordpress_data_path }}/plugins/{{ item.item.1.name }}.zip
+  with_items: "{{ _check_installation_plugins.results | default([]) }}"
+  when: >
+    item.item.1.name
+    and item.item.1.zip | default('') != ''
+    and item.item.1.url | default('') == ''
+    and item.rc != 0
+  tags:
+    - wordpress-plugins-install-plugin
+    - wordpress-plugins-install-plugin-zip
+    - wordpress-plugins-install-plugin-zip-install
+
+- name: plugins | install | url
+  command: >
+    wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
+    {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ item.item.1.url }}
+  with_items: "{{ _check_installation_plugins.results | default([]) }}"
+  when: >
+    item.item.1.name
+    and item.item.1.zip | default('') == ''
+    and item.item.1.url | default('') != ''
+    and item.rc != 0
+  tags:
+    - wordpress-plugins-install-plugin
+    - wordpress-plugins-install-plugin-url
 
 - name: plugins | check install
   command: >

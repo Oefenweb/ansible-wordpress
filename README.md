@@ -32,6 +32,7 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 * `wordpress_installs.{n}.admin_name`: [default: `admin`, optional]: Wordpress admin (user)name
 * `wordpress_installs.{n}.admin_email`: [required]: Wordpress admin email address
 * `wordpress_installs.{n}.admin_password`: [required]: Wordpress admin password (**make sure to change**)
+
 * `wordpress_installs.{n}.cron`: [optional]: Cron declaration
 * `wordpress_installs.{n}.cron.use_crond`: [default: `false`]: Whether or not to use `crond` instead of wp-cron
 * `wordpress_installs.{n}.cron.user`: [default: `www-data`]: User to run job as
@@ -41,20 +42,28 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 * `wordpress_installs.{n}.cron.schedule.minute`: [default: `*`]: Minute when the job should run
 * `wordpress_installs.{n}.cron.schedule.month`: [default: `*`]: Month when the job should run
 * `wordpress_installs.{n}.cron.schedule.weekday`: [default: `*`]: Weekday when the job should run
+
 * `wordpress_installs.{n}.themes`: [required]: (Additional) themes to install (and activate)
 * `wordpress_installs.{n}.themes.{n}.name`: [required]: Name of the theme
 * `wordpress_installs.{n}.themes.{n}.activate`: [default: `false`, optional]: Whether or not to activate the theme
+
 * `wordpress_installs.{n}.plugins`: [required]: (Additional) plugins to install (and activate)
 * `wordpress_installs.{n}.plugins.{n}.name`: [required]: Name of the plugin
+* `wordpress_installs.{n}.plugins.{n}.zip`: [optional]: Zip of the plugin
+* `wordpress_installs.{n}.plugins.{n}.url`: [optional]: Url of the plugin
 * `wordpress_installs.{n}.plugins.{n}.activate`: [default: `true`, optional]: Whether to activate or to deactivate the plugin
+* `wordpress_installs.{n}.plugins.{n}.force`: [default: `false`, optional]: Whether or not to add the `--force` option during install
+
 * `wordpress_installs.{n}.users`: [optional]: User declarations
 * `wordpress_installs.{n}.users.src`: [required]: The local path of the [csv file](http://wp-cli.org/commands/user/import-csv/) to import, can be absolute or relative (e.g. `../../../files/wordpress/users.csv`)
 * `wordpress_installs.{n}.users.skip_update`: [default: `true`, optional]: Whether or not to update users that already exist
+
 * `wordpress_installs.{n}.options`: [required]: Options to add, update or delete
 * `wordpress_installs.{n}.options.{n}.command`: [required]: Add, update or delete
 * `wordpress_installs.{n}.options.{n}.name`: [required]: Name of the option
 * `wordpress_installs.{n}.options.{n}.value`: [required]: Value of the option
 * `wordpress_installs.{n}.options.{n}.autoload`: [default: `true`, optional]: Whether this option should be automatically loaded (only supported for add command)
+
 * `wordpress_installs.{n}.queries`: [default: `[]`, optional]: A list of queries to execute
 
 ## Dependencies
