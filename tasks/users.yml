@@ -1,19 +1,9 @@
 # tasks file for wordpress, users
 ---
-- name: users | create (data) directory
-  file:
-    path: "{{ wordpress_data_path }}"
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-  tags:
-    - wordpress-users-create-data-directory
-
 - name: users | copy file
   copy:
     src: "{{ item.users.src }}"
-    dest: "{{ wordpress_data_path }}/{{ item.dbname }}.csv"
+    dest: "{{ wordpress_data_path }}/users/{{ item.dbname }}.csv"
     owner: root
     group: root
     mode: 0644
@@ -27,7 +17,8 @@
   command: >
     wp-cli user import-csv
     --allow-root --no-color --path='{{ item.item.path }}'
-    {{ wordpress_data_path }}/{{ item.item.dbname }}.csv {{ '--skip-update' if item.item.users.skip_update | default(true) else '' }}
+    {{ wordpress_data_path }}/users/{{ item.item.dbname }}.csv
+    {{ '--skip-update' if item.item.users.skip_update | default(true) else '' }}
     --send-email
   register: _check_installation_users
   changed_when: "'Success' in _check_installation_users.stdout"

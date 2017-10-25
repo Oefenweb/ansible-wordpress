@@ -26,6 +26,12 @@
           - name: contact-form-7
             activate: false
           - name: simple-fields
+          - name: advanced-custom-fields-pro
+            zip: ../../../files/wordpress/plugins/advanced-custom-fields-pro.zip
+          - name: gravityforms
+            zip: ../../../files/wordpress/plugins/gravityforms.zip
+          - name: wp-envato-market
+            url: https://github.com/envato/wp-envato-market/archive/master.zip
         users: {}
         options:
           - command: add
