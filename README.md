@@ -70,7 +70,9 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 
 None
 
-#### Example
+## Examples 
+
+### Quickstart
 
 ```yaml
 ---
@@ -102,6 +104,50 @@ None
         options: []
         queries: []
 ```
+
+### Using options:
+
+
+```yaml
+---
+- hosts: all
+  roles:
+  - wordpress
+  vars:
+    wordpress_installs:
+      - name: wordpress
+        dbname: wordpress
+        dbuser: wordpress
+        dbpass: 'heCrE7*d2KEs'
+        dbhost: localhost
+        path: /var/www
+        url: http://localhost
+        title: wordpress
+        admin_name: admin
+        admin_email: root@localhost.localdomain
+        admin_password: 'tuFr8=aPra@a'
+        themes:
+          - name: twentytwelve
+            activate: true
+          - name: twentythirteen
+        plugins:
+          - name: contact-form-7
+            activate: false
+          - name: simple-fields
+        users: {}
+        options: 
+          - name: woocommerce_api_enabled
+            command: update
+            value: yes
+          - name: swoocommerce_email_from_name
+            command: update
+            vakue: payments@mycompany.com
+          - name: woocommerce_currency
+            command: update
+            vakue: MXN
+        queries: []
+```
+
 
 #### License
 
