@@ -42,4 +42,4 @@
     - options
   when: item.1.command == 'delete'
   tags:
-    -   wordpress-options-delete
+    - wordpress-options-delete
