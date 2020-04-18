@@ -1,6 +1,7 @@
 # meta file for wordpress
 ---
 galaxy_info:
+  role_name: wordpress
   author: Mischa ter Smitten
   company: Oefenweb.nl B.V.
   description: Set up (multiple) wordpress installations in Debian-like systems (using wp-cli)
