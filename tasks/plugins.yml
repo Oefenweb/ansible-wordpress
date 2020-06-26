@@ -18,11 +18,11 @@
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
     {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ item.item.1.name }}
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
-  when: >
-    item.item.1.name
-    and item.item.1.zip | default('') == ''
-    and item.item.1.url | default('') == ''
-    and item.rc != 0
+  when:
+    - item.item.1.name
+    - item.item.1.zip | default('') == ''
+    - item.item.1.url | default('') == ''
+    - item.rc != 0
   tags:
     - wordpress-plugins-install-plugin
     - wordpress-plugins-install-plugin-wordpress_org
@@ -35,11 +35,11 @@
     group: root
     mode: 0644
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
-  when: >
-    item.item.1.name
-    and item.item.1.zip | default('') != ''
-    and item.item.1.url | default('') == ''
-    and item.rc != 0
+  when:
+    - item.item.1.name
+    - item.item.1.zip | default('') != ''
+    - item.item.1.url | default('') == ''
+    - item.rc != 0
   tags:
     - wordpress-plugins-install-plugin
     - wordpress-plugins-install-plugin-zip
@@ -50,11 +50,11 @@
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
     {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ wordpress_data_path }}/plugins/{{ item.item.1.name }}.zip
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
-  when: >
-    item.item.1.name
-    and item.item.1.zip | default('') != ''
-    and item.item.1.url | default('') == ''
-    and item.rc != 0
+  when:
+    - item.item.1.name
+    - item.item.1.zip | default('') != ''
+    - item.item.1.url | default('') == ''
+    - item.rc != 0
   tags:
     - wordpress-plugins-install-plugin
     - wordpress-plugins-install-plugin-zip
@@ -65,11 +65,11 @@
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
     {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ item.item.1.url }}
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
-  when: >
-    item.item.1.name
-    and item.item.1.zip | default('') == ''
-    and item.item.1.url | default('') != ''
-    and item.rc != 0
+  when:
+    - item.item.1.name
+    - item.item.1.zip | default('') == ''
+    - item.item.1.url | default('') != ''
+    - item.rc != 0
   tags:
     - wordpress-plugins-install-plugin
     - wordpress-plugins-install-plugin-url
@@ -93,7 +93,9 @@
   with_subelements:
     - "{{ wordpress_installs }}"
     - plugins
-  when: item.1.name and item.1.activate | default(true)
+  when:
+    - item.1.name
+    - item.1.activate | default(true)
   tags:
     - wordpress-plugins-activate-plugin
 
@@ -105,6 +107,8 @@
   with_subelements:
     - "{{ wordpress_installs }}"
     - plugins
-  when: item.1.name and not item.1.activate | default(true)
+  when:
+    - item.1.name
+    - not item.1.activate | default(true)
   tags:
     - wordpress-plugins-deactivate-plugin

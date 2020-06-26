@@ -12,7 +12,8 @@
     - wordpress-wp-cli-install
 
 - name: wp-cli | check
-  command: wp-cli --allow-root --no-color --info
+  command: >
+    wp-cli --allow-root --no-color --info
   register: _check_info
   failed_when: "'WP-CLI' not in _check_info.stdout"
   changed_when: false

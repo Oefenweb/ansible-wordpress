@@ -17,7 +17,9 @@
   command: >
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' theme install {{ item.item.1.name }}
   with_items: "{{ _check_installation_themes.results | default([]) }}"
-  when: item.item.1.name and item.rc != 0
+  when:
+    - item.item.1.name
+    - item.rc != 0
   tags:
     - wordpress-themes-install-theme
 
@@ -40,6 +42,8 @@
   with_subelements:
     - "{{ wordpress_installs }}"
     - themes
-  when: item.1.name and item.1.activate | default(false)
+  when:
+    - item.1.name
+    - item.1.activate | default(false)
   tags:
     - wordpress-themes-activate-theme

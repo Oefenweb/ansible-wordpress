@@ -1,7 +1,8 @@
 # tasks file for wordpress, core
 ---
 - name: core | check download
-  command: test -f {{ item.path }}/wp-load.php
+  command: >
+    test -f {{ item.path }}/wp-load.php
   register: _check_download
   failed_when: false
   changed_when: false

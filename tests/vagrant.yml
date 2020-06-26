@@ -25,13 +25,15 @@
         plugins:
           - name: contact-form-7
             activate: false
-          - name: simple-fields
+          - name: wp-maintenance-mode
           - name: advanced-custom-fields-pro
-            zip: ../../../files/wordpress/plugins/advanced-custom-fields-pro.zip
+            #zip: ../../../files/wordpress/plugins/advanced-custom-fields-pro.zip
+            zip: "{{ playbook_dir }}/../files/advanced-custom-fields-pro.zip"
           - name: gravityforms
-            zip: ../../../files/wordpress/plugins/gravityforms.zip
-          - name: wp-envato-market
-            url: https://github.com/envato/wp-envato-market/archive/master.zip
+            #zip: ../../../files/wordpress/plugins/gravityforms.zip
+            zip: "{{ playbook_dir }}/../files/gravityforms.zip"
+          - name: envato-market
+            url: https://envato.github.io/wp-envato-market/dist/envato-market.zip
         users: {}
         options:
           - command: add

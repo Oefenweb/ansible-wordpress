@@ -7,7 +7,9 @@
     insertafter: '^\<\?php'
     state: present
   with_items: "{{ wordpress_installs }}"
-  when: item.cron is defined and item.cron.use_crond | default(false) == true
+  when:
+    - item.cron is defined
+    - item.cron.use_crond | default(false)
   tags:
     - wordpress-wp-cron-disable-wp-cron
 
@@ -17,7 +19,7 @@
     line: "{{ wordpress_disable_wp_cron_line }}"
     state: absent
   with_items: "{{ wordpress_installs }}"
-  when: item.cron is undefined or item.cron.use_crond | default(false) == false
+  when: item.cron is undefined or not item.cron.use_crond | default(false)
   tags:
     - wordpress-wp-cron-enable-wp-cron
 
