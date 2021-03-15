@@ -1,4 +1,4 @@
-# tasks file for wordpress, queries
+# tasks file
 ---
 - name: queries | execute queries
   command: >

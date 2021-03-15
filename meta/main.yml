@@ -1,6 +1,7 @@
-# meta file for wordpress
+# meta file
 ---
 galaxy_info:
+  namespace: oefenweb
   role_name: wordpress
   author: Mischa ter Smitten
   company: Oefenweb.nl B.V.

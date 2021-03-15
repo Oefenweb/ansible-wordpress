@@ -1,4 +1,4 @@
-# tasks file for wordpress, options
+# tasks file
 ---
 - name: add options
   command: >

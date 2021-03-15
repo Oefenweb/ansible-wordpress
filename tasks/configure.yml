@@ -1,4 +1,4 @@
-# tasks file for wordpress, configure
+# tasks file
 ---
 - name: configure | create (data) directories
   file:

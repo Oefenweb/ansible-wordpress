@@ -1,4 +1,4 @@
-# tasks file for wordpress, themes
+# tasks file
 ---
 - name: themes | identify installation
   command: >

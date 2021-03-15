@@ -1,4 +1,4 @@
-# tasks file for wordpress, wp-cli
+# tasks file
 ---
 - name: wp-cron | disable wp-cron
   lineinfile:

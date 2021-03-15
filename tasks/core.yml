@@ -1,4 +1,4 @@
-# tasks file for wordpress, core
+# tasks file
 ---
 - name: core | check download
   command: >

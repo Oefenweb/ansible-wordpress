@@ -1,4 +1,4 @@
-# tasks file for wordpress
+# tasks file
 ---
 - include: wp-cli.yml
   tags:

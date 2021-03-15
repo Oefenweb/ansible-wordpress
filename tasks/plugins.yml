@@ -1,4 +1,4 @@
-# tasks file for wordpress, plugins
+# tasks file
 ---
 - name: plugins | identify installation
   command: >

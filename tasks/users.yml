@@ -1,4 +1,4 @@
-# tasks file for wordpress, users
+# tasks file
 ---
 - name: users | copy file
   copy:

@@ -1,4 +1,4 @@
-# tasks file for wordpress, chown
+# tasks file
 ---
 - name: change owner (and group)
   file:

@@ -1,4 +1,4 @@
-# defaults file for wordpress
+# defaults file
 ---
 wordpress_wp_cli_install_dir: /usr/local/bin
 
