@@ -3,8 +3,15 @@
 - hosts: all
   remote_user: vagrant
   become: true
+  pre_tasks:
+    - name: include vars
+      include_vars: "{{ playbook_dir }}/vars/main.yml"
+    - name: include tasks
+      include: "{{ playbook_dir }}/tasks/pre.yml"
   roles:
-    - role: ../../
+    - ../../
+  handlers:
+    - import_tasks: "{{ playbook_dir }}/handlers/main.yml"
   vars:
     wordpress_installs:
       - name: wordpress

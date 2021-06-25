@@ -1,0 +1,3 @@
+# vars file
+---
+wordpress_percona_server_root_password: root
