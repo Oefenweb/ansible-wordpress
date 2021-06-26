@@ -23,7 +23,7 @@ wordpress_installs:
     plugins:
       - name: contact-form-7
         activate: false
-      - name: simple-fields
+      - name: acf-extended
     users: {}
     options:
       - command: add
