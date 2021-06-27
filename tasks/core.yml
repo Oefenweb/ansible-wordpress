@@ -47,10 +47,12 @@
     - wordpress-core-is-installed
 
 - name: core | install
+  environment:
+    ITEM_TITLE: "{{ item.item.title }}"
   command: >
     wp-cli core install
     --allow-root --no-color --path='{{ item.item.path }}'
-    --url='{{ item.item.url }}' --title='{{ item.item.title }}'
+    --url='{{ item.item.url }}' --title="${ITEM_TITLE}"
     --admin_name='{{ item.item.admin_name | default('admin') }}'
     --admin_email='{{ item.item.admin_email }}'
     --admin_password='{{ item.item.admin_password }}'
