@@ -1,0 +1,49 @@
+# vars file
+---
+wordpress_percona_server_root_password: root
+
+wordpress_installs:
+  - name: wordpress
+    dbname: wordpress
+    dbuser: wordpress
+    dbpass: 'heCrE7*d2KEs'
+    dbhost: localhost
+    path: /var/www
+    url: http://localhost
+    title: wordpress
+    admin_name: admin
+    admin_email: root@localhost.localdomain
+    admin_password: 'tuFr8=aPra@a'
+    cron:
+      use_crond: true
+    themes:
+      - name: twentytwelve
+        activate: true
+      - name: twentythirteen
+    plugins:
+      - name: contact-form-7
+        activate: false
+      - name: acf-extended
+    users: {}
+    options:
+      - command: add
+        name: test
+        value: 'not existing'
+      - command: add
+        name: test
+        value: 'existing'
+      - command: update
+        name: test
+        value: 'existing'
+      - command: update
+        name: testtest
+        value: 'not existing'
+      - command: delete
+        name: recently_edited
+        value: 'existing'
+      - command: delete
+        name: testtesttest
+        value: 'not existing'
+    queries:
+      - "UPDATE wp_options SET option_value = 0 WHERE option_name = 'comments_notify'"
+      - "INSERT IGNORE INTO wp_options (option_name, option_value) VALUES ('mainwp_child_uniqueId', 'key')"

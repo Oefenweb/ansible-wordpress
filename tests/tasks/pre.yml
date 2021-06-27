@@ -1,0 +1,97 @@
+# pre test file
+---
+- name: percona server | add repo | dependencies
+  apt:
+    name:
+      - software-properties-common
+      - dirmngr
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+
+- name: percona server | add repo
+  apt:
+    deb: "https://repo.percona.com/apt/percona-release_latest.{{ ansible_distribution_release }}_all.deb"
+
+- name: php | add repo
+  apt_repository:
+    repo: 'ppa:ondrej/php'
+    update_cache: true
+    mode: 0644
+
+- name: percona server | preseed
+  debconf:
+    name: "{{ item.name }}"
+    question: "{{ item.question }}"
+    value: "{{ item.value }}"
+    vtype: "{{ item.vtype }}"
+  with_items:
+    - name: "percona-server-server-5.7"
+      question: "percona-server-server-5.7/root-pass"
+      value: "{{ wordpress_percona_server_root_password }}"
+      vtype: password
+    - name: "percona-server-server-5.7"
+      question: "percona-server-server-5.7/re-root-pass"
+      value: "{{ wordpress_percona_server_root_password }}"
+      vtype: password
+  changed_when: false
+
+- name: percona server | install
+  apt:
+    name:
+      - percona-server-client-5.7
+      - percona-server-server-5.7
+      - libperconaserverclient20
+      - "python{{ ansible_python_version is version('3', '>=') | ternary('3', '') }}-mysqldb"
+    state: "{{ apt_install_state | default('latest') }}"
+
+- name: php | install
+  apt:
+    name:
+      - apache2
+      - libapache2-mod-php7.4
+      - php7.4-cli
+      - php7.4-gd
+      - php7.4-gmp
+      - php7.4-json
+      - php7.4-ldap
+      - php7.4-mbstring
+      - php7.4-mysql
+      - php7.4-opcache
+      - php7.4-snmp
+      - php7.4-xml
+    state: "{{ apt_install_state | default('latest') }}"
+
+- name: percona server | start
+  service:
+    name: mysql
+    state: started
+
+- name: percona server | configure
+  copy:
+    dest: '~root/.my.cnf'
+    content: |
+      [client]
+      host = localhost
+      port = 3306
+      user = root
+      password = '{{ wordpress_percona_server_root_password }}'
+    owner: root
+    group: root
+    mode: 0600
+
+- name: percona server | ensure database
+  mysql_db:
+    name: wordpress
+    encoding: utf8mb4
+    collation: utf8mb4_unicode_ci
+
+- name: percona server | ensure grants
+  mysql_user:
+    name: wordpress
+    password: 'heCrE7*d2KEs'
+    priv: 'wordpress.*:ALL'
+
+- name: apache server | start
+  service:
+    name: apache2
+    state: started

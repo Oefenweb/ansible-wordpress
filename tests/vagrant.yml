@@ -3,8 +3,15 @@
 - hosts: all
   remote_user: vagrant
   become: true
+  pre_tasks:
+    - name: include vars
+      include_vars: "{{ playbook_dir }}/vars/main.yml"
+    - name: include tasks
+      include: "{{ playbook_dir }}/tasks/pre.yml"
   roles:
-    - role: ../../
+    - ../../
+  handlers:
+    - import_tasks: "{{ playbook_dir }}/handlers/main.yml"
   vars:
     wordpress_installs:
       - name: wordpress
@@ -27,10 +34,10 @@
             activate: false
           - name: wp-maintenance-mode
           - name: advanced-custom-fields-pro
-            #zip: ../../../files/wordpress/plugins/advanced-custom-fields-pro.zip
+            # zip: ../../../files/wordpress/plugins/advanced-custom-fields-pro.zip
             zip: "{{ playbook_dir }}/../files/advanced-custom-fields-pro.zip"
           - name: gravityforms
-            #zip: ../../../files/wordpress/plugins/gravityforms.zip
+            # zip: ../../../files/wordpress/plugins/gravityforms.zip
             zip: "{{ playbook_dir }}/../files/gravityforms.zip"
           - name: envato-market
             url: https://envato.github.io/wp-envato-market/dist/envato-market.zip

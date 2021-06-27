@@ -20,8 +20,8 @@
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
     - item.item.1.name
-    - item.item.1.zip | default('') == ''
-    - item.item.1.url | default('') == ''
+    - not item.item.1.zip | default(false)
+    - not item.item.1.url | default(false)
     - item.rc != 0
   tags:
     - wordpress-plugins-install-plugin
@@ -37,8 +37,8 @@
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
     - item.item.1.name
-    - item.item.1.zip | default('') != ''
-    - item.item.1.url | default('') == ''
+    - item.item.1.zip | default(false)
+    - not item.item.1.url | default(false)
     - item.rc != 0
   tags:
     - wordpress-plugins-install-plugin
@@ -52,8 +52,8 @@
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
     - item.item.1.name
-    - item.item.1.zip | default('') != ''
-    - item.item.1.url | default('') == ''
+    - item.item.1.zip | default(false)
+    - not item.item.1.url | default(false)
     - item.rc != 0
   tags:
     - wordpress-plugins-install-plugin
@@ -67,8 +67,8 @@
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
     - item.item.1.name
-    - item.item.1.zip | default('') == ''
-    - item.item.1.url | default('') != ''
+    - not item.item.1.zip | default(false)
+    - item.item.1.url | default(false)
     - item.rc != 0
   tags:
     - wordpress-plugins-install-plugin
