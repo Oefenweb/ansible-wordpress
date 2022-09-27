@@ -1,4 +1,5 @@
 ---
 warn_list:
-  - '106'
+  - role-name
+  - name[casing]
   - no-handler
