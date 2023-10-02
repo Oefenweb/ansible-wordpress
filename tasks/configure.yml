@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: configure | create (data) directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: root

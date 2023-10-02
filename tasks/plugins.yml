@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: plugins | identify installation
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin is-installed {{ item.1.name }}
   register: _check_installation_plugins
   failed_when: false
@@ -14,7 +14,7 @@
     - wordpress-plugins-is-installed-plugin
 
 - name: plugins | install | wordpress.org
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
     {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ item.item.1.name }}
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
@@ -28,7 +28,7 @@
     - wordpress-plugins-install-plugin-wordpress_org
 
 - name: plugins | install | zip | copy
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.item.1.zip }}"
     dest: "{{ wordpress_data_path }}/plugins/{{ item.item.1.name }}.zip"
     owner: root
@@ -46,7 +46,7 @@
     - wordpress-plugins-install-plugin-zip-copy
 
 - name: plugins | install | zip | install
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
     {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ wordpress_data_path }}/plugins/{{ item.item.1.name }}.zip
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
@@ -61,7 +61,7 @@
     - wordpress-plugins-install-plugin-zip-install
 
 - name: plugins | install | url
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
     {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ item.item.1.url }}
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
@@ -75,7 +75,7 @@
     - wordpress-plugins-install-plugin-url
 
 - name: plugins | check install
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin is-installed {{ item.1.name }}
   changed_when: false
   with_subelements:
@@ -86,7 +86,7 @@
     - wordpress-plugins-check-install-plugin
 
 - name: plugins | activate
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin activate {{ item.1.name }}
   register: _check_activate_plugin
   changed_when: "'Success: Plugin' in _check_activate_plugin.stdout and not 'already' in _check_activate_plugin.stdout"
@@ -100,7 +100,7 @@
     - wordpress-plugins-activate-plugin
 
 - name: plugins | deactivate
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.0.path }}' plugin deactivate {{ item.1.name }}
   register: _check_deactivate_plugin
   changed_when: "'Success: Plugin' in _check_deactivate_plugin.stdout and not 'already' in _check_deactivate_plugin.stdout"

@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: core | check download
-  command: >
+  ansible.builtin.command: >
     test -f {{ item.path }}/wp-load.php
   register: _check_download
   failed_when: false
@@ -11,7 +11,7 @@
     - wordpress-core-is-downloaded
 
 - name: core | download
-  command: >
+  ansible.builtin.command: >
     wp-cli core download
     --allow-root --no-color --path='{{ item.item.path }}'
     --locale='{{ item.item.locale | default('en_US') }}'
@@ -21,7 +21,7 @@
     - wordpress-core-downloaded
 
 - name: core | configure
-  command: >
+  ansible.builtin.command: >
     wp-cli core config
     --allow-root --no-color --path='{{ item.path }}'
     --dbname='{{ item.dbname }}'
@@ -36,7 +36,7 @@
     - wordpress-core-configure
 
 - name: core | identify installation
-  command: >
+  ansible.builtin.command: >
     wp-cli core is-installed
     --allow-root --no-color --path='{{ item.path }}'
   register: _check_installation
@@ -47,7 +47,7 @@
     - wordpress-core-is-installed
 
 - name: core | install
-  command: >
+  ansible.builtin.command: >
     wp-cli core install
     --allow-root --no-color --path='{{ item.item.path }}'
     --url='{{ item.item.url }}' --title='{{ item.item.title }}'
@@ -60,7 +60,7 @@
     - wordpress-core-install
 
 - name: core | check install
-  command: >
+  ansible.builtin.command: >
     wp-cli core is-installed
     --allow-root --no-color --path='{{ item.path }}'
   changed_when: false

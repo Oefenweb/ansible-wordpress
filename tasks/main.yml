@@ -1,60 +1,70 @@
 # tasks file
 ---
-- include: wp-cli.yml
+- name: wp-cli
+  ansible.builtin.import_tasks: wp-cli.yml
   tags:
     - configuration
     - wordpress
     - wordpress-wp-cli
 
-- include: core.yml
+- name: core
+  ansible.builtin.import_tasks: core.yml
   tags:
     - configuration
     - wordpress
     - wordpress-core
 
-- include: configure.yml
+- name: configure
+  ansible.builtin.import_tasks: configure.yml
   tags:
     - configuration
     - wordpress
     - wordpress-configure
 
-- include: wp-cron.yml
+- name: wp-cron
+  ansible.builtin.import_tasks: wp-cron.yml
   tags:
     - configuration
     - wordpress
     - wordpress-wp-cron
 
-- include: themes.yml
+- name: themes
+  ansible.builtin.import_tasks: themes.yml
   tags:
     - configuration
     - wordpress
     - wordpress-themes
 
-- include: plugins.yml
+- name: plugins
+  ansible.builtin.import_tasks: plugins.yml
   tags:
     - configuration
     - wordpress
     - wordpress-plugins
 
-- include: users.yml
+- name: users
+  ansible.builtin.import_tasks: users.yml
   tags:
     - configuration
     - wordpress
     - wordpress-users
 
-- include: options.yml
+- name: options
+  ansible.builtin.import_tasks: options.yml
   tags:
     - configuration
     - wordpress
     - wordpress-options
 
-- include: queries.yml
+- name: queries
+  ansible.builtin.import_tasks: queries.yml
   tags:
     - configuration
     - wordpress
     - wordpress-queries
 
-- include: chown.yml
+- name: chown
+  ansible.builtin.import_tasks: chown.yml
   tags:
     - configuration
     - wordpress

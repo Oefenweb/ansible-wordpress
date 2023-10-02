@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: users | copy file
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.users.src }}"
     dest: "{{ wordpress_data_path }}/users/{{ item.dbname }}.csv"
     owner: root
@@ -14,7 +14,7 @@
     - wordpress-users-copy-file
 
 - name: users | install
-  command: >
+  ansible.builtin.command: >
     wp-cli user import-csv
     --allow-root --no-color --path='{{ item.item.path }}'
     {{ wordpress_data_path }}/users/{{ item.item.dbname }}.csv

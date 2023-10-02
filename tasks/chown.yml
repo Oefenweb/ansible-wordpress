@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: change owner (and group)
-  file:
+  ansible.builtin.file:
     path: "{{ item.path }}"
     owner: "{{ item.owner | default('www-data') }}"
     group: "{{ item.group | default(item.owner) | default('www-data') }}"
