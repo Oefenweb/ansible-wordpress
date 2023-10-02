@@ -11,7 +11,8 @@
   roles:
     - ../../
   handlers:
-    - ansible.builtin.import_tasks: "{{ playbook_dir }}/handlers/main.yml"
+    - name: include handlers
+      ansible.builtin.import_tasks: "{{ playbook_dir }}/handlers/main.yml"
   vars:
     wordpress_installs:
       - name: wordpress

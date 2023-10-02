@@ -15,6 +15,7 @@
     wp-cli core download
     --allow-root --no-color --path='{{ item.item.path }}'
     --locale='{{ item.item.locale | default('en_US') }}'
+  changed_when: true
   with_items: "{{ _check_download.results | default([]) }}"
   when: item.rc != 0
   tags:
@@ -54,6 +55,7 @@
     --admin_name='{{ item.item.admin_name | default('admin') }}'
     --admin_email='{{ item.item.admin_email }}'
     --admin_password='{{ item.item.admin_password }}'
+  changed_when: true
   with_items: "{{ _check_installation.results | default([]) }}"
   when: item.rc != 0
   tags:

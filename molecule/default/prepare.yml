@@ -10,4 +10,5 @@
     - name: include tasks
       ansible.builtin.import_tasks: "{{ playbook_dir }}/../../tests/tasks/pre.yml"
   handlers:
-    - ansible.builtin.import_tasks: "{{ playbook_dir }}/../../tests/handlers/main.yml"
+    - name: include handlers
+      ansible.builtin.import_tasks: "{{ playbook_dir }}/../../tests/handlers/main.yml"

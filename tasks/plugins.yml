@@ -17,6 +17,7 @@
   ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
     {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ item.item.1.name }}
+  changed_when: true
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
     - item.item.1.name
@@ -49,6 +50,7 @@
   ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
     {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ wordpress_data_path }}/plugins/{{ item.item.1.name }}.zip
+  changed_when: true
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
     - item.item.1.name
@@ -64,6 +66,7 @@
   ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}'
     {{ '--force' if item.item.1.force | default(false) else '' }} plugin install {{ item.item.1.url }}
+  changed_when: true
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
     - item.item.1.name

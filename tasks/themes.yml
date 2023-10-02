@@ -16,6 +16,7 @@
 - name: themes | install
   ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' theme install {{ item.item.1.name }}
+  changed_when: true
   with_items: "{{ _check_installation_themes.results | default([]) }}"
   when:
     - item.item.1.name

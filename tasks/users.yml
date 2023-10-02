@@ -13,7 +13,7 @@
   tags:
     - wordpress-users-copy-file
 
-- name: users | install
+- name: users | install  # noqa no-handler
   ansible.builtin.command: >
     wp-cli user import-csv
     --allow-root --no-color --path='{{ item.item.path }}'
