@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: themes | identify installation
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1.name }}
   register: _check_installation_themes
   failed_when: false
@@ -14,8 +14,9 @@
     - wordpress-themes-is-installed-theme
 
 - name: themes | install
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.item.0.path }}' theme install {{ item.item.1.name }}
+  changed_when: true
   with_items: "{{ _check_installation_themes.results | default([]) }}"
   when:
     - item.item.1.name
@@ -24,7 +25,7 @@
     - wordpress-themes-install-theme
 
 - name: themes | check install
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme is-installed {{ item.1.name }}
   changed_when: false
   with_subelements:
@@ -35,7 +36,7 @@
     - wordpress-themes-install-theme-check
 
 - name: themes | activate
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --path='{{ item.0.path }}' theme activate {{ item.1.name }}
   register: _check_activate_theme
   changed_when: "'Success: Switched to' in _check_activate_theme.stdout"

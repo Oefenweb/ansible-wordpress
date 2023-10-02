@@ -1,3 +1,4 @@
 # requirements file
 ---
-collections: []
+collections:
+  - name: community.mysql

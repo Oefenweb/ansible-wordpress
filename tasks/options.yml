@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: add options
-  command: >
+  ansible.builtin.command: >
     wp-cli option
     --allow-root --no-color --path='{{ item.0.path }}'
     {{ item.1.command }} '{{ item.1.name }}' '{{ item.1.value }}' --autoload={{ 'yes' if item.1.autoload | default(true) else 'no' }}
@@ -16,7 +16,7 @@
     - wordpress-options-add
 
 - name: update options
-  command: >
+  ansible.builtin.command: >
     wp-cli option
     --allow-root --no-color --path='{{ item.0.path }}'
     {{ item.1.command }} '{{ item.1.name }}' '{{ item.1.value }}'
@@ -30,7 +30,7 @@
     - wordpress-options-update
 
 - name: delete options
-  command: >
+  ansible.builtin.command: >
     wp-cli option
     --allow-root --no-color --path='{{ item.0.path }}'
     {{ item.1.command }} '{{ item.1.name }}'

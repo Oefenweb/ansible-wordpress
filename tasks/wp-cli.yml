@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: wp-cli | install
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     dest: "{{ wordpress_wp_cli_install_dir }}/wp-cli"
     force: true
@@ -12,7 +12,7 @@
     - wordpress-wp-cli-install
 
 - name: wp-cli | check
-  command: >
+  ansible.builtin.command: >
     wp-cli --allow-root --no-color --info
   register: _check_info
   failed_when: "'WP-CLI' not in _check_info.stdout"

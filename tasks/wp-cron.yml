@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: wp-cron | disable wp-cron
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ item.path }}/wp-config.php"
     line: "{{ wordpress_disable_wp_cron_line }}"
     insertafter: '^\<\?php'
@@ -14,7 +14,7 @@
     - wordpress-wp-cron-disable-wp-cron
 
 - name: wp-cron | enable wp-cron
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ item.path }}/wp-config.php"
     line: "{{ wordpress_disable_wp_cron_line }}"
     state: absent
@@ -24,7 +24,7 @@
     - wordpress-wp-cron-enable-wp-cron
 
 - name: wp-cron | enable crond
-  cron:
+  ansible.builtin.cron:
     name: "{{ item.name }}"
     state: "{{ 'present' if item.cron is defined and item.cron.use_crond | default(false) else 'absent' }}"
     job: "wget -O /dev/null {{ item.url }}/wp-cron.php > /dev/null 2>&1"

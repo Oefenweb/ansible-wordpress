@@ -1,7 +1,7 @@
 # tasks file
 ---
 - name: queries | execute queries
-  command: >
+  ansible.builtin.command: >
     wp-cli db query
     --allow-root --no-color --path='{{ item.0.path }}'
     "{{ item.1 }}; SELECT ROW_COUNT();"

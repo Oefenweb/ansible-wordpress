@@ -1,7 +1,7 @@
 # pre test file
 ---
 - name: percona server | add repo | dependencies
-  apt:
+  ansible.builtin.apt:
     name:
       - software-properties-common
       - dirmngr
@@ -9,17 +9,17 @@
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
 
 - name: percona server | add repo
-  apt:
+  ansible.builtin.apt:
     deb: "https://repo.percona.com/apt/percona-release_latest.{{ ansible_distribution_release }}_all.deb"
 
 - name: php | add repo
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: 'ppa:ondrej/php'
     update_cache: true
     mode: 0644
 
 - name: percona server | preseed
-  debconf:
+  ansible.builtin.debconf:
     name: "{{ item.name }}"
     question: "{{ item.question }}"
     value: "{{ item.value }}"
@@ -36,7 +36,7 @@
   changed_when: false
 
 - name: percona server | install
-  apt:
+  ansible.builtin.apt:
     name:
       - percona-server-client-5.7
       - percona-server-server-5.7
@@ -45,7 +45,7 @@
     state: "{{ apt_install_state | default('latest') }}"
 
 - name: php | install
-  apt:
+  ansible.builtin.apt:
     name:
       - apache2
       - libapache2-mod-php7.4
@@ -62,12 +62,12 @@
     state: "{{ apt_install_state | default('latest') }}"
 
 - name: percona server | start
-  service:
+  ansible.builtin.service:
     name: mysql
     state: started
 
 - name: percona server | configure
-  copy:
+  ansible.builtin.copy:
     dest: '~root/.my.cnf'
     content: |
       [client]
@@ -80,18 +80,18 @@
     mode: 0600
 
 - name: percona server | ensure database
-  mysql_db:
+  community.mysql.mysql_db:
     name: wordpress
     encoding: utf8mb4
     collation: utf8mb4_unicode_ci
 
 - name: percona server | ensure grants
-  mysql_user:
+  community.mysql.mysql_user:
     name: wordpress
     password: 'heCrE7*d2KEs'
     priv: 'wordpress.*:ALL'
 
 - name: apache server | start
-  service:
+  ansible.builtin.service:
     name: apache2
     state: started

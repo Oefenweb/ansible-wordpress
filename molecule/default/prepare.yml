@@ -4,10 +4,11 @@
   become: true
   tasks:
     - name: include vars
-      include_vars: "{{ playbook_dir }}/../../defaults/main.yml"
+      ansible.builtin.include_vars: "{{ playbook_dir }}/../../defaults/main.yml"
     - name: include vars
-      include_vars: "{{ playbook_dir }}/../../tests/vars/main.yml"
+      ansible.builtin.include_vars: "{{ playbook_dir }}/../../tests/vars/main.yml"
     - name: include tasks
-      include: "{{ playbook_dir }}/../../tests/tasks/pre.yml"
+      ansible.builtin.import_tasks: "{{ playbook_dir }}/../../tests/tasks/pre.yml"
   handlers:
-    - import_tasks: "{{ playbook_dir }}/../../tests/handlers/main.yml"
+    - name: include handlers
+      ansible.builtin.import_tasks: "{{ playbook_dir }}/../../tests/handlers/main.yml"
