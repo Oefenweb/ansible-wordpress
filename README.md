@@ -70,7 +70,7 @@ This role assumes a working virtual host (that handles `wordpress_url`).
 
 None
 
-## Examples 
+## Examples
 
 ### Quickstart
 
@@ -78,7 +78,7 @@ None
 ---
 - hosts: all
   roles:
-  - wordpress
+    - oefenweb.wordpress
   vars:
     wordpress_installs:
       - name: wordpress
@@ -112,7 +112,7 @@ None
 ---
 - hosts: all
   roles:
-  - wordpress
+    - oefenweb.wordpress
   vars:
     wordpress_installs:
       - name: wordpress
@@ -135,7 +135,7 @@ None
             activate: false
           - name: simple-fields
         users: {}
-        options: 
+        options:
           - name: woocommerce_api_enabled
             command: update
             value: yes
