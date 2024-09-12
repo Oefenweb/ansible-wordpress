@@ -10,6 +10,7 @@
   register: _check_copy_users
   with_items: "{{ wordpress_installs }}"
   when: item.users.src is defined
+  no_log: true
   tags:
     - wordpress-users-copy-file
 
@@ -24,5 +25,6 @@
   changed_when: "'Success' in _check_installation_users.stdout"
   with_items: "{{ _check_copy_users.results | default([]) }}"
   when: item.changed
+  no_log: true
   tags:
     - wordpress-users-import-file

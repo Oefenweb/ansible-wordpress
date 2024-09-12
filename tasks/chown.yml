@@ -6,4 +6,5 @@
     owner: "{{ item.owner | default('www-data') }}"
     group: "{{ item.group | default(item.owner) | default('www-data') }}"
     recurse: true
+  no_log: true
   with_items: "{{ wordpress_installs }}"

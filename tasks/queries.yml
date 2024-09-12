@@ -10,5 +10,6 @@
   with_subelements:
     - "{{ wordpress_installs | selectattr('queries', 'defined') | list }}"
     - queries
+  no_log: true
   tags:
     - wordpress-queries-execute-queries

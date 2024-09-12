@@ -12,6 +12,7 @@
     - "{{ wordpress_installs }}"
     - options
   when: item.1.command == 'add'
+  no_log: true
   tags:
     - wordpress-options-add
 
@@ -26,6 +27,7 @@
     - "{{ wordpress_installs }}"
     - options
   when: item.1.command == 'update'
+  no_log: true
   tags:
     - wordpress-options-update
 
@@ -41,5 +43,6 @@
     - "{{ wordpress_installs }}"
     - options
   when: item.1.command == 'delete'
+  no_log: true
   tags:
     - wordpress-options-delete

@@ -10,6 +10,7 @@
   when:
     - item.cron is defined
     - item.cron.use_crond | default(false)
+  no_log: true
   tags:
     - wordpress-wp-cron-disable-wp-cron
 
@@ -20,6 +21,7 @@
     state: absent
   with_items: "{{ wordpress_installs }}"
   when: item.cron is undefined or not item.cron.use_crond | default(false)
+  no_log: true
   tags:
     - wordpress-wp-cron-enable-wp-cron
 
@@ -36,5 +38,6 @@
     cron_file: wp-cron
     user: "{{ item.cron.user if item.cron is defined and item.cron.user is defined else 'www-data' }}"
   with_items: "{{ wordpress_installs }}"
+  no_log: true
   tags:
     - wordpress-wp-cron-enable-crond

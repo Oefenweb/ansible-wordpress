@@ -7,6 +7,7 @@
   failed_when: false
   changed_when: false
   with_items: "{{ wordpress_installs }}"
+  no_log: true
   tags:
     - wordpress-core-is-downloaded
 
@@ -18,6 +19,7 @@
   changed_when: true
   with_items: "{{ _check_download.results | default([]) }}"
   when: item.rc != 0
+  no_log: true
   tags:
     - wordpress-core-downloaded
 
@@ -33,6 +35,7 @@
   args:
     creates: "{{ item.path }}/wp-config.php"
   with_items: "{{ wordpress_installs }}"
+  no_log: true
   tags:
     - wordpress-core-configure
 
@@ -44,6 +47,7 @@
   failed_when: false
   changed_when: false
   with_items: "{{ wordpress_installs }}"
+  no_log: true
   tags:
     - wordpress-core-is-installed
 
@@ -58,6 +62,7 @@
   changed_when: true
   with_items: "{{ _check_installation.results | default([]) }}"
   when: item.rc != 0
+  no_log: true
   tags:
     - wordpress-core-install
 
@@ -67,5 +72,6 @@
     --allow-root --no-color --path='{{ item.path }}'
   changed_when: false
   with_items: "{{ wordpress_installs }}"
+  no_log: true
   tags:
     - wordpress-core-install-check

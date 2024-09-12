@@ -10,6 +10,7 @@
     - "{{ wordpress_installs }}"
     - plugins
   when: item.1
+  no_log: true
   tags:
     - wordpress-plugins-is-installed-plugin
 
@@ -24,6 +25,7 @@
     - not item.item.1.zip | default(false)
     - not item.item.1.url | default(false)
     - item.rc != 0
+  no_log: true
   tags:
     - wordpress-plugins-install-plugin
     - wordpress-plugins-install-plugin-wordpress_org
@@ -41,6 +43,7 @@
     - item.item.1.zip | default(false)
     - not item.item.1.url | default(false)
     - item.rc != 0
+  no_log: true
   tags:
     - wordpress-plugins-install-plugin
     - wordpress-plugins-install-plugin-zip
@@ -57,10 +60,12 @@
     - item.item.1.zip | default(false)
     - not item.item.1.url | default(false)
     - item.rc != 0
+  no_log: true
   tags:
     - wordpress-plugins-install-plugin
     - wordpress-plugins-install-plugin-zip
     - wordpress-plugins-install-plugin-zip-install
+
 
 - name: plugins | install | url
   ansible.builtin.command: >
@@ -73,6 +78,7 @@
     - not item.item.1.zip | default(false)
     - item.item.1.url | default(false)
     - item.rc != 0
+  no_log: true
   tags:
     - wordpress-plugins-install-plugin
     - wordpress-plugins-install-plugin-url
@@ -85,6 +91,7 @@
     - "{{ wordpress_installs }}"
     - plugins
   when: item.1.name
+  no_log: true
   tags:
     - wordpress-plugins-check-install-plugin
 
@@ -99,6 +106,7 @@
   when:
     - item.1.name
     - item.1.activate | default(true)
+  no_log: true
   tags:
     - wordpress-plugins-activate-plugin
 
@@ -113,5 +121,6 @@
   when:
     - item.1.name
     - not item.1.activate | default(true)
+  no_log: true
   tags:
     - wordpress-plugins-deactivate-plugin

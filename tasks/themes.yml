@@ -10,6 +10,7 @@
     - "{{ wordpress_installs }}"
     - themes
   when: item.1.name
+  no_log: true
   tags:
     - wordpress-themes-is-installed-theme
 
@@ -21,6 +22,7 @@
   when:
     - item.item.1.name
     - item.rc != 0
+  no_log: true
   tags:
     - wordpress-themes-install-theme
 
@@ -32,6 +34,7 @@
     - "{{ wordpress_installs }}"
     - themes
   when: item.1.name
+  no_log: true
   tags:
     - wordpress-themes-install-theme-check
 
@@ -46,5 +49,6 @@
   when:
     - item.1.name
     - item.1.activate | default(false)
+  no_log: true
   tags:
     - wordpress-themes-activate-theme
