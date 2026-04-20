@@ -34,7 +34,7 @@
     dest: "{{ wordpress_data_path }}/plugins/{{ item.item.1.name }}.zip"
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
     - item.item.1.name

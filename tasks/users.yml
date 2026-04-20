@@ -6,7 +6,7 @@
     dest: "{{ wordpress_data_path }}/users/{{ item.dbname }}.csv"
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
   register: _check_copy_users
   with_items: "{{ wordpress_installs }}"
   when: item.users.src is defined
