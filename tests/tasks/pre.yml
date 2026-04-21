@@ -10,7 +10,7 @@
 
 - name: percona server | percona-release
   ansible.builtin.apt:
-    deb: "https://repo.percona.com/apt/percona-release_latest.{{ ansible_distribution_release }}_all.deb"
+    deb: "https://repo.percona.com/apt/percona-release_latest.{{ ansible_facts['distribution_release'] }}_all.deb"
 
 - name: percona server | add repo
   ansible.builtin.shell: >
@@ -50,7 +50,7 @@
       - percona-server-client
       - percona-server-server
       - libperconaserverclient21
-      - "python{{ ansible_python_version is version('3', '>=') | ternary('3', '') }}-mysqldb"
+      - "python{{ ansible_facts['python_version'] is version('3', '>=') | ternary('3', '') }}-mysqldb"
     state: "{{ apt_install_state | default('latest') }}"
 
 - name: php | install
