@@ -9,7 +9,7 @@
   with_subelements:
     - "{{ wordpress_installs }}"
     - themes
-  when: item.1.name
+  when: item.1.name | length > 0
   tags:
     - wordpress-themes-is-installed-theme
 
@@ -19,7 +19,7 @@
   changed_when: true
   with_items: "{{ _check_installation_themes.results | default([]) }}"
   when:
-    - item.item.1.name
+    - item.item.1.name | length > 0
     - item.rc != 0
   tags:
     - wordpress-themes-install-theme
@@ -31,7 +31,7 @@
   with_subelements:
     - "{{ wordpress_installs }}"
     - themes
-  when: item.1.name
+  when: item.1.name | length > 0
   tags:
     - wordpress-themes-install-theme-check
 
@@ -44,7 +44,7 @@
     - "{{ wordpress_installs }}"
     - themes
   when:
-    - item.1.name
-    - item.1.activate | default(false)
+    - item.1.name | length > 0
+    - item.1.activate | bool | default(false)
   tags:
     - wordpress-themes-activate-theme
