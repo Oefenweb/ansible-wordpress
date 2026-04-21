@@ -6,7 +6,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
   with_items:
     - "{{ wordpress_data_path }}/themes"
     - "{{ wordpress_data_path }}/plugins"

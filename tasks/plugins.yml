@@ -9,7 +9,7 @@
   with_subelements:
     - "{{ wordpress_installs }}"
     - plugins
-  when: item.1
+  when: item.1.name | length > 0
   tags:
     - wordpress-plugins-is-installed-plugin
 
@@ -20,7 +20,7 @@
   changed_when: true
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
-    - item.item.1.name
+    - item.item.1.name | length > 0
     - not item.item.1.zip | default(false)
     - not item.item.1.url | default(false)
     - item.rc != 0
@@ -34,10 +34,10 @@
     dest: "{{ wordpress_data_path }}/plugins/{{ item.item.1.name }}.zip"
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
-    - item.item.1.name
+    - item.item.1.name | length > 0
     - item.item.1.zip | default(false)
     - not item.item.1.url | default(false)
     - item.rc != 0
@@ -53,7 +53,7 @@
   changed_when: true
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
-    - item.item.1.name
+    - item.item.1.name | length > 0
     - item.item.1.zip | default(false)
     - not item.item.1.url | default(false)
     - item.rc != 0
@@ -69,7 +69,7 @@
   changed_when: true
   with_items: "{{ _check_installation_plugins.results | default([]) }}"
   when:
-    - item.item.1.name
+    - item.item.1.name | length > 0
     - not item.item.1.zip | default(false)
     - item.item.1.url | default(false)
     - item.rc != 0
@@ -84,7 +84,7 @@
   with_subelements:
     - "{{ wordpress_installs }}"
     - plugins
-  when: item.1.name
+  when: item.1.name | length > 0
   tags:
     - wordpress-plugins-check-install-plugin
 
@@ -97,8 +97,8 @@
     - "{{ wordpress_installs }}"
     - plugins
   when:
-    - item.1.name
-    - item.1.activate | default(true)
+    - item.1.name | length > 0
+    - item.1.activate | bool | default(true)
   tags:
     - wordpress-plugins-activate-plugin
 
@@ -111,7 +111,7 @@
     - "{{ wordpress_installs }}"
     - plugins
   when:
-    - item.1.name
-    - not item.1.activate | default(true)
+    - item.1.name | length > 0
+    - not item.1.activate | bool | default(true)
   tags:
     - wordpress-plugins-deactivate-plugin

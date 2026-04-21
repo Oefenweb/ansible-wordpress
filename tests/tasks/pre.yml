@@ -8,15 +8,20 @@
     update_cache: true
     cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
 
-- name: percona server | add repo
+- name: percona server | percona-release
   ansible.builtin.apt:
-    deb: "https://repo.percona.com/apt/percona-release_latest.{{ ansible_distribution_release }}_all.deb"
+    deb: "https://repo.percona.com/apt/percona-release_latest.{{ ansible_facts['distribution_release'] }}_all.deb"
+
+- name: percona server | add repo
+  ansible.builtin.shell: >
+    percona-release enable-only ps-80
+  changed_when: true
 
 - name: php | add repo
   ansible.builtin.apt_repository:
     repo: 'ppa:ondrej/php'
     update_cache: true
-    mode: 0644
+    mode: '0644'
 
 - name: percona server | preseed
   ansible.builtin.debconf:
@@ -25,40 +30,43 @@
     value: "{{ item.value }}"
     vtype: "{{ item.vtype }}"
   with_items:
-    - name: "percona-server-server-5.7"
-      question: "percona-server-server-5.7/root-pass"
+    - name: 'percona-server-server'
+      question: 'percona-server-server/root-pass'
       value: "{{ wordpress_percona_server_root_password }}"
       vtype: password
-    - name: "percona-server-server-5.7"
-      question: "percona-server-server-5.7/re-root-pass"
+    - name: 'percona-server-server'
+      question: 'percona-server-server/re-root-pass'
       value: "{{ wordpress_percona_server_root_password }}"
       vtype: password
+    - name: 'percona-server-server'
+      question: 'percona-server-server/default-auth-override'
+      value: 'Use Legacy Authentication Method (Retain MySQL 5.x Compatibility)'
+      vtype: select
   changed_when: false
 
 - name: percona server | install
   ansible.builtin.apt:
     name:
-      - percona-server-client-5.7
-      - percona-server-server-5.7
-      - libperconaserverclient20
-      - "python{{ ansible_python_version is version('3', '>=') | ternary('3', '') }}-mysqldb"
+      - percona-server-client
+      - percona-server-server
+      - libperconaserverclient21
+      - "python{{ ansible_facts['python_version'] is version('3', '>=') | ternary('3', '') }}-mysqldb"
     state: "{{ apt_install_state | default('latest') }}"
 
 - name: php | install
   ansible.builtin.apt:
     name:
       - apache2
-      - libapache2-mod-php7.4
-      - php7.4-cli
-      - php7.4-gd
-      - php7.4-gmp
-      - php7.4-json
-      - php7.4-ldap
-      - php7.4-mbstring
-      - php7.4-mysql
-      - php7.4-opcache
-      - php7.4-snmp
-      - php7.4-xml
+      - libapache2-mod-php8.3
+      - php8.3-cli
+      - php8.3-gd
+      - php8.3-gmp
+      - php8.3-ldap
+      - php8.3-mbstring
+      - php8.3-mysql
+      - php8.3-opcache
+      - php8.3-snmp
+      - php8.3-xml
     state: "{{ apt_install_state | default('latest') }}"
 
 - name: percona server | start
@@ -77,7 +85,7 @@
       password = '{{ wordpress_percona_server_root_password }}'
     owner: root
     group: root
-    mode: 0600
+    mode: '0600'
 
 - name: percona server | ensure database
   community.mysql.mysql_db:
