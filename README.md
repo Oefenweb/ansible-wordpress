@@ -1,6 +1,7 @@
 ## wordpress
 
-[![Build Status](https://travis-ci.org/Oefenweb/ansible-wordpress.svg?branch=master)](https://travis-ci.org/Oefenweb/ansible-wordpress) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-wordpress-blue.svg)](https://galaxy.ansible.com/Oefenweb/wordpress)
+[![CI](https://github.com/Oefenweb/ansible-wordpress/workflows/CI/badge.svg)](https://github.com/Oefenweb/ansible-wordpress/actions?query=workflow%3ACI)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-wordpress-blue.svg)](https://galaxy.ansible.com/Oefenweb/wordpress)
 
 Set up (multiple) WordPress installations in Debian-like systems (using `wp-cli`).
 
