@@ -3,3 +3,4 @@ warn_list:
   - role-name
   - name[play]
   - name[casing]
+  - fqcn[canonical]
