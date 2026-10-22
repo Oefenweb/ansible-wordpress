@@ -98,7 +98,7 @@
     - plugins
   when:
     - item.1.name | length > 0
-    - item.1.activate | bool | default(true)
+    - item.1.activate | default(true) | bool
   tags:
     - wordpress-plugins-activate-plugin
 
@@ -112,6 +112,6 @@
     - plugins
   when:
     - item.1.name | length > 0
-    - not item.1.activate | bool | default(true)
+    - not item.1.activate| default(true) | bool
   tags:
     - wordpress-plugins-deactivate-plugin

@@ -45,6 +45,6 @@
     - themes
   when:
     - item.1.name | length > 0
-    - item.1.activate | bool | default(false)
+    - item.1.activate | default(false) | bool
   tags:
     - wordpress-themes-activate-theme
